@@ -1,0 +1,32 @@
+messages:
+  join:
+  - Oh, da ist ein starkes <p> gespawnt
+  - Alarm, <p> ist hier
+  - Hey, da ist <p>
+  - Moinsen <p>
+  - Herzlich Willkommen <p>
+  leave:
+  - Taschau <p>
+  - das wars mit <p>
+  - auf Wiedersehen <p>
+  - bb <p>
+  - bye, have a greate time, <p>
+  wahrsagerin:
+  - Du wirst morgen sterben
+  - Dich erwarten Glück und Reichtum
+  - Du wirst dir einen Rang auf ServerOne kaufen und dadurch das ewige Glück erfahren
+  - Ich sehe Pech in deinen Augen
+  - Morgen 4:00 wird der Server restarten
+  bernd:
+  - §aHerzlich willkommen im Rathaus
+  - §aHier finden Sie die Verwaltung von §2ServerOne
+MainWarps:
+  Spawn:
+    World: world
+    X: 0.5
+    Y: 54.0
+    Z: 0.5
+    Yaw: -356.65143
+    Pitch: 63.144012
+Worlds:
+  build: serverone

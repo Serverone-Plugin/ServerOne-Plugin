@@ -1,0 +1,23 @@
+name: ServerOnePlugin
+author: Robotix_00
+main: main.Main
+version: 0.4
+api-version: 1.13
+commands:
+   skill:
+    description: kontrolliert die Skills
+   getcontroller:
+    description: Gibt dem Spieler einen ServerOneController
+    usage: /getcontroller
+   setMainwarp:
+    descrpition: Setzt einen globalen Warppoint
+    usage: /setmainwarp [warpname]
+   money:
+   sop:
+   setwarplimit:
+   toggleop:
+    description: Wechselt den berechtigten Spieler zwischen op und deop
+    usage: /toggleop
+   setcanselfop:
+   sprachfehler:
+   vote:
