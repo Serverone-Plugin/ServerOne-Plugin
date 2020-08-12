@@ -24,7 +24,7 @@ public class ServerOnePlugin extends JavaPlugin {
 	    worldGuardIsEnabled = true;
 	}
 	
-	
+	this.getLogger().info("Test");
 	this.getLogger().info("ServerOne-Plugin geladen");
 	
 	ServerOneConfig.loadConfig(this, "plugins/ServerOne/ServerOnePlugin", "config.yml", "playerdata.yml", "shops.yml");
