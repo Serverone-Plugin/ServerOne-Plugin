@@ -1,23 +1,57 @@
 name: ServerOnePlugin
 author: Robotix_00
-main: main.Main
-version: 0.4
-api-version: 1.13
+main: de.robotix_00.serveroneplugin.ServerOnePlugin
+version: 0.6
+api-version: 1.16
+depend:
+- ServerOneSource
+loadbefore:
+- ServerOnePlugin-DiscordBot
 commands:
    skill:
-    description: kontrolliert die Skills
-   getcontroller:
-    description: Gibt dem Spieler einen ServerOneController
-    usage: /getcontroller
-   setMainwarp:
-    descrpition: Setzt einen globalen Warppoint
-    usage: /setmainwarp [warpname]
-   money:
-   sop:
-   setwarplimit:
-   toggleop:
-    description: Wechselt den berechtigten Spieler zwischen op und deop
-    usage: /toggleop
-   setcanselfop:
-   sprachfehler:
+      description: kontrolliert die Skills
+   money: null
+   sop: null
+   toggleop: null
+   sprachfehler: null
    vote:
+      description: Gibt den Votelink des Servers zurueck
+      usage: /<command>
+permissions:
+   serveroneplugin.*:
+      description: Erlaubt Zugriff auf alle ServerOne-Funktionen
+      default: false
+      children:
+         serveroneplugin.command.*: true
+         serveroneplugin.util.*: true
+   serveroneplugin.command.*:
+      description: Erlaubt Zugriff auf alle ServerOneBefehle
+      default: false
+      children:
+         serveroneplugin.sprachfehler: true
+         serveroneplugin.toggleop: true
+         serveroneplugin.command.sop: true
+         serveroneplugin.command.money: true
+   serveroneplugin.util.*:
+      description: Erlaubt den Zugriff auf alle ServerOne-Features
+      default: false
+      children:
+         serveroneplugin.util.usewarp: true
+   serveroneplugin.command.sprachfehler:
+      description: Erlaubt die Verwendung des /sprachfehler-Befehls
+      default: op
+   serveroneplugin.command.toggleop:
+      description: Erlaubt sich selbst den Operatorstatus hinzufuegen
+      default: op
+   serveroneplugin.command.money:
+      description: Erlaubt den Zugriff auf den /money-Command
+      default: op
+   serveroneplugin.command.sop:
+      description: Erlaubt Zugriff auf den /sop Befehl
+      default: false
+   serveroneplugin.util.usewarp:
+      description: Erlaubt die Verwendung der Warpfunktionen
+      default: true
+   serveroneplugin.premium:
+      description: Erlaubt Zugriff auf die Premiumfeatures
+      default: false
