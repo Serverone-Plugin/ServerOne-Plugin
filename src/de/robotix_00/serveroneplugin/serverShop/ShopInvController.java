@@ -20,7 +20,7 @@ public class ShopInvController implements Listener {
 	if (!(event.getWhoClicked() instanceof Player))
 	    return;
 	Player player = (Player) event.getWhoClicked();
-
+	
 	String inv = event.getView().getTitle();
 
 	if (!(event.getInventory().getHolder() == null))
