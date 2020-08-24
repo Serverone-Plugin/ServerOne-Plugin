@@ -15,7 +15,7 @@ public class newPlayerListener implements Listener {
 	Player player = event.getPlayer();
 	if (player.hasPlayedBefore())
 	    return;
-	player.teleport(Warp.Spawn.getLocation(null));
+	player.teleport(Warp.Spawn.getLocation(player));
 
 	player.getInventory().addItem(new ItemBuilder(Material.COMPASS).setName("§6§lServerOneController").build());
 	player.getInventory().addItem(new ItemBuilder(Material.BREAD, 64).build());

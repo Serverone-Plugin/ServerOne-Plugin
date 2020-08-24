@@ -14,7 +14,6 @@ public class CreditCard implements Listener {
 	    return new CreditCard(card);
 	else
 	    return null;
-
     }
 
     private CreditCard(ItemStack card) {

@@ -17,7 +17,8 @@ public class ServerOnePlugin extends JavaPlugin {
     // onEnable
     public void onEnable() {
 	plugin = this;
-
+	
+	
 	Plugin worldGuard = this.getServer().getPluginManager().getPlugin("WorldGuard");
 	if (!(worldGuard == null || !(worldGuard instanceof WorldGuardPlugin))) {
 	    wgPlugin = (WorldGuardPlugin) worldGuard;
