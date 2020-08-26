@@ -1,6 +1,12 @@
 # ServerOne-Plugin
 
-Das ServerOne-Plugin dient zur Erweiterung der Minecraft-Features.
+## Features
 
-Liste der Features:
-  *coming soon*
+*
+*
+*
+
+## Benötigte Plugins
+* ServerOneSource *(zwingend)*
+* WorldEdit *(alternativ)*
+* WorldGuard *(alternativ)*
