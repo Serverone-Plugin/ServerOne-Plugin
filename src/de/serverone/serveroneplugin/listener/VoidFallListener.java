@@ -23,6 +23,6 @@ public class VoidFallListener implements Listener {
 	    return;
 	player.sendMessage("§cUiuiui, da wärst du fast gestorben");
 	player.setFallDistance(0);
-	player.teleport(Warp.Spawn.getLocation(null));
+	player.teleport(Warp.Spawn.getLocation(player));
     }
 }
