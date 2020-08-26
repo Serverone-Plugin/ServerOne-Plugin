@@ -1,6 +1,6 @@
 name: ServerOnePlugin
-author: Robotix_00
-main: de.robotix_00.serveroneplugin.ServerOnePlugin
+authors: [Robotix_00, Luigistar]
+main: de.serverone.serveroneplugin.ServerOnePlugin
 version: 0.6
 api-version: 1.16
 depend:
