@@ -6,9 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/projects/JavaProjects/ServerOne/arcives/ServerOneSource.jar"/>
-	<classpathentry kind="lib" path="D:/projects/JavaProjects/ServerOne/arcives/worldedit-bukkit-7.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/projects/JavaProjects/ServerOne/arcives/worldguard-bukkit-7.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/projects/JavaProjects/ServerOne/arcives/craftbukkit-1.16.1.jar"/>
+	<classpathentry kind="lib" path="../libs/craftbukkit-1.16.1.jar"/>
+	<classpathentry kind="lib" path="../libs/ServerOneSource.jar"/>
+	<classpathentry kind="lib" path="../libs/worldedit-bukkit-7.1.0.jar"/>
+	<classpathentry kind="lib" path="../libs/worldguard-bukkit-7.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
