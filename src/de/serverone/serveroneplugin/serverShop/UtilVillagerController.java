@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
+import de.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.serveroneplugin.test.Function;
 import de.serverone.serveroneplugin.universalGetter.ItemGetter;

@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.util.ServerOneConfig;
 
 public class SprachFehlerCommand implements CommandExecutor {
 

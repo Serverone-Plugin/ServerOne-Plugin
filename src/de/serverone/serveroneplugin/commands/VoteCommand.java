@@ -4,8 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.util.ServerOneConfig;
 
 public class VoteCommand implements CommandExecutor {
 

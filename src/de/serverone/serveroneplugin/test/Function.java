@@ -11,8 +11,8 @@ import org.bukkit.block.data.type.WallSign;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.util.ServerOneConfig;
 
 public class Function {
     public static boolean canStack(Inventory inv, ItemStack item, int amount) {

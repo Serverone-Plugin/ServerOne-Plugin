@@ -6,7 +6,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.robotix_00.serverone.source.builder.ItemBuilder;
+import de.serverone.source.builder.ItemBuilder;
 import de.serverone.serveroneplugin.commands.MoneyCommand;
 import de.serverone.serveroneplugin.commands.SkillCommand;
 import de.serverone.serveroneplugin.commands.SprachFehlerCommand;

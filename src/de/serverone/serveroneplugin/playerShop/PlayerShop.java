@@ -11,16 +11,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import de.robotix_00.serverone.source.builder.DefaultMenuBuilder;
-import de.robotix_00.serverone.source.builder.ItemBuilder;
 import de.serverone.serveroneplugin.items.CreditCard;
+import de.serverone.source.builder.DefaultMenuBuilder;
+import de.serverone.source.builder.ItemBuilder;
 
 public class PlayerShop {
     private Inventory inv;
     private List<ShopLink> links = new ArrayList<ShopLink>();
     private int[] invSlots = { 19, 21, 23, 25, 37, 39, 41, 43 };
     private Player player;
-    
+
     private ItemStack shopCore, linkList;
     private CreditCard creditCard;
     private String owner;
@@ -40,7 +40,7 @@ public class PlayerShop {
     private PlayerShop(Block lectern, Player player) {
 	Barrel barrel = (Barrel) lectern.getLocation().subtract(0, 1, 0).getBlock().getState();
 	Inventory container = barrel.getInventory();
-	
+
 	this.player = player;
 	this.creditCard = CreditCard.getCard(container.getItem(12));
 	this.shopCore = container.getItem(13);
@@ -75,18 +75,21 @@ public class PlayerShop {
 	    inv.setItem(invSlots[i], links.get(itemIndex).getShopItem(itemIndex));
 	}
     }
+
     public void buy(int index) {
 	links.get(index).buy(player, creditCard);
-	
+
 	reloadInv();
     }
+
     public void sell(int index) {
 	links.get(index).sell(player, creditCard);
-	
+
 	reloadInv();
     }
+
     public void shutdowLink(int index) {
-	if(!links.get(index).isStilActive()) {
+	if (!links.get(index).isStilActive()) {
 	    System.out.println("cant do that");
 	    return;
 	}
@@ -94,14 +97,15 @@ public class PlayerShop {
 	links.remove(index);
 	reloadInv();
     }
+
     public String getOwner() {
 	return owner;
     }
-    
+
     public ShopLink getLink(int index) {
 	return links.get(index);
     }
-    
+
     private static boolean isValid(Block lectern) {
 	ItemStack core, creditCard;
 
@@ -124,16 +128,15 @@ public class PlayerShop {
     }
 
     private Inventory getDefaultInv() {
-	Inventory inv = new DefaultMenuBuilder(
-		"§b§l" + owner + "§as Shop").setClose()
-			.build();
-	//previous-page-Item
+	Inventory inv = new DefaultMenuBuilder("§b§l" + owner + "§as Shop").setClose().build();
+	// previous-page-Item
 	if (page != 0)
-	    inv.setItem(0, new ItemBuilder(Material.RED_STAINED_GLASS_PANE, page).setName("§evorherige Seite").setMenuItem()
-		    .build());
-	//next-page-Item
-	if (page+1 <= links.size()/invSlots.length && page < 10) inv.setItem(8,
-		new ItemBuilder(Material.RED_STAINED_GLASS_PANE, page+2).setName("§enächste Seite").setMenuItem().build());
+	    inv.setItem(0, new ItemBuilder(Material.RED_STAINED_GLASS_PANE, page).setName("§evorherige Seite")
+		    .setMenuItem().build());
+	// next-page-Item
+	if (page + 1 <= links.size() / invSlots.length && page < 10)
+	    inv.setItem(8, new ItemBuilder(Material.RED_STAINED_GLASS_PANE, page + 2).setName("§enächste Seite")
+		    .setMenuItem().build());
 
 	return inv;
     }

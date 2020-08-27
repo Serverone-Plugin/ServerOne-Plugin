@@ -18,8 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.robotix_00.serverone.source.util.Cooldown;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.util.Cooldown;
 
 public class ShulkerSword implements Listener{
 	JavaPlugin plugin = ServerOnePlugin.getPlugin();
