@@ -130,8 +130,8 @@ public class PlayerShop {
 	    if(card == null) return false;
 	    creditCard = CreditCard.getCard(card);
 	}
-	if(!container.getItem(13).equals(shopCore)) return false;
-	if(!container.getItem(14).equals(linkList)) return false;
+	if(!(container.getItem(13)== (shopCore))) return false;
+	if(!(container.getItem(14) == (linkList))) return false;
 	return true;
     }
 

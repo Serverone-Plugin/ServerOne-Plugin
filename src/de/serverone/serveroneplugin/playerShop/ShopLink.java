@@ -132,7 +132,6 @@ public class ShopLink {
     }
 
     public boolean isStilActive() {
-
 	Sign nowSign;
 	if (sign.getBlock().getState() instanceof Sign)
 	    nowSign = (Sign) sign.getBlock().getState();
