@@ -1,0 +1,157 @@
+#Example
+#
+#
+#[shopname]:
+#   invname: "[name-of-villager]"
+#   profession: [villagerprofession]
+#   type: [villagertype]
+#   items:
+#      - [slot] [item] [kaufanzahl] [kaufpreis] [verkaufsanzahl] [verkaufspreis] --> buy and sell
+#      - [slot] [item] * [irrelavant] [verkaufsanzahl] [verkaufspreis] --> sell only
+#      - [slot] [item] [kaufanzahl] [kaufpreis]  * [irrelavant] --> buy only
+
+
+
+#registering Shops (insert names of created Shops)
+shops:
+    - farmer
+    - miner
+    - lumber
+    - netherer
+    - sandy
+    - hunter
+    - barkeeper
+    - seeman
+
+
+farmer:
+    invname: "§6§lFarmer"
+    profession: farmer
+    type: taiga
+    items:
+    - 19 apple 16 5 16 4
+    - 21 wheat_seeds 64 10 * *
+    - 22 beetroot_seeds 64 15 * *
+    - 23 pumpkin_seeds 32 8 * *
+    - 24 melon_seeds 32 8 * *
+    - 25 sugar_cane 64 16 * *
+    - 37 potato 32 15 32 12
+    - 38 carrot 32 15 32 12
+    - 39 wheat 32 15 32 12
+    - 40 beetroot 32 15 32 12
+    - 41 pumpkin 16 8 * *
+    - 42 melon_slice 32 4 * *
+    - 43 bamboo 32 10 * *
+miner:
+    invname: "§6§lBergarbeiter"
+    profession: weaponsmith
+    type: taiga
+    items:
+    - 19 iron_ore 15 10 15 8
+    - 20 gold_ore 10 15 10 18
+    - 21 lapis_lazuli 32 15 32 12
+    - 22 diamond 1 10 1 8
+    - 23 gravel 64 16 64 13
+    - 25 cobblestone 64 10 64 8
+    - 26 diorite 32 10 32 8
+    - 28 iron_ingot 10 10 10 8
+    - 29 gold_ingot 10 20 10 16
+    - 30 coal 16 4 16 3
+    - 31 emerald 1 10 1 8
+    - 32 flint 16 10 16 8
+    - 33 stone 64 10 64 8
+    - 34 granite 32 10 32 8
+    - 40 redstone 32 15 32 12
+    - 43 andesite 32 10 32 8
+lumber:
+    invname: "§6§lHolzfäller"
+    profession: cleric
+    type: taiga
+    items:
+    - 19 oak_log 32 10 32 8
+    - 20 birch_log 32 10 32 8
+    - 21 spruce_log 32 10 32 8
+    - 23 dark_oak_log 32 15 32 12
+    - 24 jungle_log 32 15 32 12
+    - 25 acacia_log 32 15 32 12
+    - 37 oak_sapling 10 4 10 3
+    - 38 birch_sapling 10 4 10 3
+    - 39 spruce_sapling 10 4 10 3
+    - 41 dark_oak_sapling 10 6 10 5
+    - 42 jungle_sapling 10 6 10 5
+    - 43 acacia_sapling 10 6 10 5
+netherer:
+    invname: "§6§lNetherforscher"
+    profession: weaponsmith
+    type: taiga
+    items:
+    - 20 netherrack 64 8 64 6
+    - 21 glowstone 16 25 16 20
+    - 22 soul_sand 16 20 16 16
+    - 23 magma_block 16 20 16 16
+    - 24 nether_brick 64 10 64 8
+    - 38 nether_wart 16 20 16 16
+    - 39 quartz 16 20 16 16
+    - 40 ghast_tear 1 20 1 16
+    - 41 magma_cream 8 10 8 8
+    - 42 blaze_rod 16 30 16 24
+sandy:
+    invname: "§6§lSandmann"
+    profession: cleric
+    type: desert
+    items:
+    - 20 sand 64 10 64 8
+    - 21 sandstone 64 40 64 32
+    - 22 smooth_sandstone 64 40 64 32
+    - 23 cut_sandstone 64 40 64 32
+    - 24 chiseled_sandstone 64 40 64 32
+    - 38 red_sand 64 15 64 12
+    - 39 red_sandstone 64 60 64 48
+    - 40 smooth_red_sandstone 64 60 64 48
+    - 41 cut_red_sandstone 64 60 64 48
+    - 42 chiseled_red_sandstone 64 60 64 48
+hunter:
+    invname: "§6§lJäger"
+    profession: fletcher
+    type: taiga
+    items:
+    - 19 rotten_flesh 32 16 32 12
+    - 21 bone 32 20 32 16
+    - 23 gunpowder 5 25 5 20
+    - 25 slime_ball 5 30 5 24
+    - 37 ender_pearl 8 30 * *
+    - 39 string 32 16 32 12
+    - 41 spider_eye 16 20 16 16
+    - 43 phantom_membrane 5 25 5 20
+barkeeper:
+    invname: "§6§lSchankwirt"
+    profession: librarian
+    type: taiga
+    items:
+    - 19 cooked_porkchop 16 20 * *
+    - 20 cooked_beef 16 20 * *
+    - 21 cooked_mutton 16 20 * *
+    - 22 cooked_chicken 16 20 * *
+    - 23 cooked_rabbit 16 20 * *
+    - 24 cooked_salmon 16 20 * *
+    - 25 cooked_cod 16 20 * *
+    - 37 pumpkin_pie 10 20 * *
+    - 38 baked_potato 16 15 * *
+    - 39 bread 16 64 * *
+    - 40 cookie 64 10 * *
+    - 41 beetroot_soup 1 16 * *
+    - 42 mushroom_stew 1 16 * *
+    - 43 rabbit_stew 1 16 * *
+seeman:
+    invname: "§6§lMeeresforscher"
+    profession: fisherman
+    type: taiga
+    items:
+    - 20 prismarine 16 64 16 32
+    - 21 dark_prismarine 16 64 16 32
+    - 23 prismarine_bricks 16 64 16 32
+    - 24 kelp 64 16 64 12
+    - 38 sea_lantern 4 32 4 25
+    - 39 heart_of_the_sea * * 1 30
+    - 41 nautilus_shell * * 1 40
+    - 42 dried_kelp_block 16 54 16 43
