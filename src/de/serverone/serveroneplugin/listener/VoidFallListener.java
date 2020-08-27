@@ -6,9 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.serveroneplugin.serverOneController.Warp;
+import de.serverone.source.util.ServerOneConfig;
 
 public class VoidFallListener implements Listener {
     @EventHandler

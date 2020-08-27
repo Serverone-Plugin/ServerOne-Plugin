@@ -9,10 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 
-import de.robotix_00.serverone.source.builder.DefaultMenuBuilder;
-import de.robotix_00.serverone.source.builder.ItemBuilder;
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.builder.DefaultMenuBuilder;
+import de.serverone.source.builder.ItemBuilder;
+import de.serverone.source.util.ServerOneConfig;
 
 public class ShopVillagerController implements Listener {
     @EventHandler

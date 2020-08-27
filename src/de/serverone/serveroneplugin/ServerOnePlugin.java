@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
+import de.serverone.source.util.ServerOneConfig;
 
 public class ServerOnePlugin extends JavaPlugin {
 

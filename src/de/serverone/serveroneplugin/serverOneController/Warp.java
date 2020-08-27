@@ -10,8 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.util.ServerOneConfig;
 
 public enum Warp implements Listener {
     Spawn("Spawn"), FreeBuild("FreeBuild"), Home("Home"), Point_1("Warp_1"), Point_2("Warp_2"), Point_3("Warp_3"),

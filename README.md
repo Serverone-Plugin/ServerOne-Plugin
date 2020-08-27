@@ -3,11 +3,11 @@
 ## Features
 
 ### ServerOneController
-Das Herzstück des ServerOnePlugins ist der `ServerOneController`. Dieser tritt in Form eines Kompasses mit custom name auf. Beim erstmaligen Beitreten des Spielers auf den Server wird ihm dieser mit einem Starterset aus Steinwerkzeugen und ein wenig Essen dem Inventar hinzugefügt. Sollte das aus einem irgendeinem Grund nicht funktionieren (z. B. durch späteres Hinzufügen des Plugins kann man diesen auf mit dem Befehl `/sop getcontroller` bekommen oder durch das Craftingrezept `[" G ","GKG"," G "]` wobei *G = gold_nugget* und *K = compass* entspricht herstellt werden. Durch das Ausführen eines Rechtsklicks auf den Kompass öffnet sich ein Inventar mit folgenden Items, bei denen man durch klicken in weitere Inventare kommt.
+Das Herzst�ck des ServerOnePlugins ist der `ServerOneController`. Dieser tritt in Form eines Kompasses mit custom name auf. Beim erstmaligen Beitreten des Spielers auf den Server wird ihm dieser mit einem Starterset aus Steinwerkzeugen und ein wenig Essen dem Inventar hinzugef�gt. Sollte das aus einem irgendeinem Grund nicht funktionieren (z. B. durch späteres Hinzuf�gen des Plugins kann man diesen auf mit dem Befehl `/sop getcontroller` bekommen oder durch das Craftingrezept `[" G ","GKG"," G "]` wobei *G = gold_nugget* und *K = compass* entspricht herstellt werden. Durch das Ausf�hren eines Rechtsklicks auf den Kompass öffnet sich ein Inventar mit folgenden Items, bei denen man durch klicken in weitere Inventare kommt.
 * `Skills` (enchanting_table) -- (wip)
-* `Warps` (cartography_table) -- öffnet das Warp-Inventar mit folgenden Items:
+* `Warps` (cartography_table) -- �ffnet das Warp-Inventar mit folgenden Items:
   * `0-4 Enderperlen (Warppunt 1-4)` -- durch Klicken einer dieser Perlen wird man nach drei Sekunden zu dem davor definierten Punkt teleportiert (die Anzahl der Perlen hängt von dem Warppunktlimit des Spielers ab)
-  * `set Warppoints` (writable_book) -- öffnet ein Inventar mit 0-4 Auswahlmöglichkeiten. Durch dasd Auswählen einer der Papiere wird der spielerspezifische Warppunkt gesetzt 
+  * `set Warppoints` (writable_book) -- öffnet ein Inventar mit 0-4 Auswahlm�glichkeiten. Durch dasd Auswahlen einer der Papiere wird der spielerspezifische Warppunkt gesetzt 
   * `tpas` -- wip
 * `Regelwerk` (book) -- öffnet beim Klicken ein Buch mit dem Regelwerk
 * `Premium` (nether_star) -- öffnen das Premiuminventar mit folgenden Items: (benötigte Berechtigung: `serveroneplugin.premium`)
@@ -25,7 +25,7 @@ Das Herzstück des ServerOnePlugins ist der `ServerOneController`. Dieser tritt 
 * `Antivoidfall` -- Teleportiert den Spieler zurück zum globalen Spawnpunkt, wenn er durch das Void Schaden erleidet und in sich der Welt mit dem in der `config.yml`-datei unter dem Pfad `World.buid` gespeicherten Namen befindet
 * `Sitze` -- Durch das Ausführen eines Rechtsklicks auf eine Stufe oder eine Treppe setzt sich der Spieler auf diese
 * `Effektkristalle` -- --> Erklärung ausstehend <--
-* `Fahrstühle` -- --> Erklärung ausstehend <--
+* `Fahrst�hle` -- --> Erklärung ausstehend <--
 ## Befehle
 * `/sop` -- ist der Hauptbefehl des ServerOnePlugins, mit dessen Hilfe man auf die unten aufgezählten Features zugreifen kann (benötigte Berechtigung: `serveroneplugin.command.sop`)
   * `/sop spawn [bankier, bernd, wahrsagerin]` -- spawnt den ausgewählten NPC an der Position des ausführenden Spielers

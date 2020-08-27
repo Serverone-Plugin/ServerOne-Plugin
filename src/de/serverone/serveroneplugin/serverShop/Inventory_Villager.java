@@ -4,11 +4,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import de.robotix_00.serverone.source.builder.DefaultMenuBuilder;
-import de.robotix_00.serverone.source.builder.ItemBuilder;
-import de.robotix_00.serverone.source.builder.SkullBuilder;
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
+import de.serverone.source.builder.DefaultMenuBuilder;
+import de.serverone.source.builder.ItemBuilder;
+import de.serverone.source.builder.SkullBuilder;
+import de.serverone.source.util.ServerOneConfig;
 
 public class Inventory_Villager {
     public static Inventory getBankInv(Player player) {

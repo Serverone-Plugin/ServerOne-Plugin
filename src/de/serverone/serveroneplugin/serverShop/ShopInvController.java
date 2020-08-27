@@ -8,8 +8,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.robotix_00.serverone.source.builder.ItemBuilder;
-import de.robotix_00.serverone.source.util.ServerOneConfig;
+import de.serverone.source.builder.ItemBuilder;
+import de.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
 
 public class ShopInvController implements Listener {

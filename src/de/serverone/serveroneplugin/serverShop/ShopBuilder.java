@@ -3,10 +3,10 @@ package de.serverone.serveroneplugin.serverShop;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.robotix_00.serverone.source.util.ServerOneConfig;
 import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.serveroneplugin.test.Function;
 import de.serverone.serveroneplugin.universalGetter.ItemGetter;
+import de.serverone.source.util.ServerOneConfig;
 
 public class ShopBuilder {
     ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
