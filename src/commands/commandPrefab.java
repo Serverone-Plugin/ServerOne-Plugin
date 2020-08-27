@@ -1,0 +1,26 @@
+package commands;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class commandPrefab implements CommandExecutor {
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String commandlable, String[] args) {
+    	//Spielerinitialisierung
+    	Player player = null;
+    	if (sender instanceof Player) player = (Player) sender;
+    		if(player.hasPermission("PERMISSION")) {
+    			if(args.length == 0) {
+    		    	
+    				
+    		    	
+    		    	
+    		    	return true;
+    			} else return false; 
+    		} else return false; 
+	}
+
+}
