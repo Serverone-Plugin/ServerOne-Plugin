@@ -16,16 +16,16 @@ public class LeaveWelcomeMessage implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
 	Player spieler = event.getPlayer();
-	event.setQuitMessage(PlayerMoves(spieler, "messages.leave"));
+	event.setQuitMessage(randomMessage(spieler, "messages.leave"));
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 	Player player = event.getPlayer();
-	event.setJoinMessage(PlayerMoves(player, "messages.join"));
+	event.setJoinMessage(randomMessage(player, "messages.join"));
     }
 
-    private String PlayerMoves(Player player, String list) {
+    private String randomMessage(Player player, String list) {
 	ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "config.yml");
 	List<String> args = (List<String>) config.getList(list);
 	int rand = (int) Math.round(Math.random() * (args.size() - 1));

@@ -124,14 +124,13 @@ public class PlayerShop {
     public boolean isStilActive() {
 	if(!(shopBarrel.getBlock().getLocation().getBlock().getState() instanceof Barrel)) return false;
 	Inventory container = shopBarrel.getInventory();
-	
 	if(!(container.getItem(12) == (creditCard.getItem()))) {
 	    ItemStack card = container.getItem(12);
 	    if(card == null) return false;
 	    creditCard = CreditCard.getCard(card);
 	}
-	if(!(container.getItem(13)== (shopCore))) return false;
-	if(!(container.getItem(14) == (linkList))) return false;
+	if(!shopCore.isSimilar(container.getItem(13))) return false;
+	if(!linkList.isSimilar(container.getItem(14))) return false;
 	return true;
     }
 

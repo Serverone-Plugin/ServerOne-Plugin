@@ -137,7 +137,6 @@ public class ShopLink {
 	    nowSign = (Sign) sign.getBlock().getState();
 	else
 	    return false;
-
 	String[] lines = nowSign.getLines();
 	if (!lines[0].startsWith("§a§lShop-Link an"))
 	    return false;
@@ -145,16 +144,7 @@ public class ShopLink {
 	    return false;
 	if (getShopMat(lines[2]) != mat)
 	    return false;
-	String[] tmp = getInteractSetup(lines[3]);
-	String buy = tmp[0], sell = tmp[1];
-	
-	//TODO I DONT UNDERSTAND THIS WHOLE SHIT
-	if ((buy == null && amount_buy != 0) || buy == null || !buy.split("-")[0].equals("" + amount_buy)
-		|| !buy.split("-")[1].equals("" + price_buy))
-	    return false;
-
-	if ((sell == null && amount_sell != 0) || sell == null || !sell.split("-")[0].equals("" + amount_sell)
-		|| !sell.split("-")[1].equals("" + price_sell))
+	if (!state.equals(lines[3]))
 	    return false;
 
 	return true;
