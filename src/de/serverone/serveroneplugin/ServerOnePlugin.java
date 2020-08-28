@@ -27,7 +27,7 @@ public class ServerOnePlugin extends JavaPlugin {
 	
 	this.getLogger().info("ServerOne-Plugin geladen");
 	
-	ServerOneConfig.loadConfig(this, "plugins/ServerOne/ServerOnePlugin", "config.yml", "playerdata.yml", "shops.yml");
+	ServerOneConfig.loadConfig(this, "ServerOne/ServerOnePlugin", "config.yml", "playerdata.yml", "shops.yml");
 	
 	
 	Loader.load(this);
