@@ -1,5 +1,6 @@
 package de.serverone.serveroneplugin.serverOneController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -11,8 +12,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.StateFlag.State;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+
 import de.serverone.serveroneplugin.serverShop.Inventory_Villager;
 import de.serverone.serveroneplugin.universalGetter.BookGetter;
+import de.serverone.source.util.ServerOneWorldGuard;
 
 public class Controller_Listener implements Listener {
     @EventHandler
@@ -55,9 +62,18 @@ public class Controller_Listener implements Listener {
 		player.openInventory(invs.getWarpInv());
 		break;
 	    case "§6§lPremium":
-		if(player.hasPermission("serveroneplugin.premium"))
+		if (player.hasPermission("serveroneplugin.premium"))
 		    player.openInventory(invs.getPremiumInv());
-		else player.sendMessage("§cDu bist kein Premium!");
+		else
+		    player.sendMessage("§cDu bist kein Premium!");
+		break;
+	    case "§b§lGrundstückseinstellungen":
+		if (ServerOneWorldGuard.getOwnersRegion(player) != null) {
+		    player.openInventory(invs.getWGInv());
+		} else {
+		    player.sendMessage("§cDu hast keinen Zugriff auf diese Region!");
+		}
+
 		break;
 	    case "§6§lDas Regelwerk":
 		player.openBook(BookGetter.getServerRules());
@@ -195,6 +211,63 @@ public class Controller_Listener implements Listener {
 		break;
 	    }
 	    return;
+	}
+	if (event.getView().getTitle() == ConInv.GS_SETTINGS.getInvName()) {
+	    ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
+	    if (region == null) {
+		player.sendMessage("§cDu hast keinen Zugriff auf diese Region!");
+		player.closeInventory();
+		return;
+	    }
+	    
+	    boolean simpleFlag = true;
+	    
+	    State state = null;
+	    List<StateFlag> flags = new ArrayList<>();
+	    String flagName = "";
+	    
+	    switch (displayname) {
+	    case "§bInteract":
+		flags.add(Flags.INTERACT);
+		flagName = "Interact";
+		break;
+	    case "§bSchneefall":
+		flags.add(Flags.SNOW_FALL);
+		flagName = "Schneefall";
+		break;
+	    case "§bFahrzeuge":
+		flags.add(Flags.DESTROY_VEHICLE);
+		flags.add(Flags.PLACE_VEHICLE);
+		flagName = "Fahrzeuge";
+		break;
+	    case "§bPVP":
+		flags.add(Flags.PVP);
+		flagName = "PVP";
+		break;
+	    case "§bMobspawning":
+		flags.add(Flags.MOB_SPAWNING);
+		flags.add(Flags.MOB_DAMAGE);
+		flagName = "Mobspawning";
+		break;
+	    default:
+		simpleFlag = false;
+	    }
+	    if (simpleFlag) {
+		for(StateFlag flag : flags) {
+		if (region.getFlag(flag) == null || region.getFlag(flag).equals(State.DENY))
+		    state = State.ALLOW;
+		else
+		    state = State.DENY;
+		region.setFlag(flag, state);
+		}
+		player.sendMessage("§aDer Flag §e" + flagName + "§a wurde erfolgreich verändert §e(" + state.toString() + ")");
+		return;
+	    }
+	    switch(displayname) {
+	    case "§6§lzurück":
+		player.openInventory(invs.getMainInv());
+		break;
+	    }
 	}
     }
 }

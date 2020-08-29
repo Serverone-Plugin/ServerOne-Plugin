@@ -25,16 +25,28 @@ public class Inventorys {
 		.setBorderAround().setBarMiddle(new SkullBuilder(player)
 			.setName("§b§l" + player.getName() + "§3s ServerOneController").setLore("§8MenuItem").build())
 		.build();
+
 	inv.setItem(20, new ItemBuilder(Material.ENCHANTING_TABLE).setName("§b§lSkills").setLore("§czum Skillmenü")
 		.setMenuItem().build());
+
 	inv.setItem(22, new ItemBuilder(Material.CARTOGRAPHY_TABLE).setName("§b§lWarps").setLore("§czum Warpmenü")
 		.setMenuItem().build());
+
 	inv.setItem(24, new ItemBuilder(Material.BOOK).setName("§6§lDas Regelwerk")
 		.setLore("§clese das mächtige Regelwerk").setMenuItem().build());
+
+	if (ServerOnePlugin.worldGuardIsEnabled())
+	    inv.setItem(38, new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("§b§lGrundstückseinstellungen")
+		    .setMenuItem().build());
+	else
+	    inv.setItem(38, new ItemBuilder(Material.TOTEM_OF_UNDYING)
+		    .setName("§b§lGrundstückseinstellungen §c(nicht verfügbar)").setMenuItem().build());
+
 	inv.setItem(42, new ItemBuilder(Material.NETHER_STAR).setName("§6§lPremium").setLore("§czu den Premiumfeatures")
 		.setMenuItem().build());
-	for (int i = 38; i <= 40; i = i + 2)
-	    inv.setItem(i, new ItemBuilder(Material.BARRIER).setName("§4coming soon").setMenuItem().build());
+
+	inv.setItem(40, new ItemBuilder(Material.BARRIER).setName("§4coming soon").setMenuItem().build());
+
 	return inv;
     }
 
@@ -168,6 +180,19 @@ public class Inventorys {
 
 	inv.setItem(36, new ItemBuilder(Material.WRITABLE_BOOK).setName("§b§lset Warppoints").setMenuItem().build());
 
+	return inv;
+    }
+
+    public Inventory getWGInv() {
+	inv = new DefaultMenuBuilder(ConInv.GS_SETTINGS.getInvName())
+		.setBarSide(new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("§b§lGrundstückseinstellungen")
+			.setMenuItem().build())
+		.build();
+	inv.setItem(19, new ItemBuilder(Material.OAK_FENCE_GATE).setName("§bInteract").setMenuItem().build());
+	inv.setItem(21, new ItemBuilder(Material.SNOW).setName("§bSchneefall").setMenuItem().build());
+	inv.setItem(23, new ItemBuilder(Material.MINECART).setName("§bFahrzeuge").setMenuItem().build());
+	inv.setItem(25, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bPVP").setMenuItem().build());
+	inv.setItem(37, new ItemBuilder(Material.ZOMBIE_HEAD).setName("§bMobspawning").setMenuItem().build());
 	return inv;
     }
 
