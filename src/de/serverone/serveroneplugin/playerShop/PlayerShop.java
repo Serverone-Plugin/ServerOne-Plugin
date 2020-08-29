@@ -15,6 +15,8 @@ import de.serverone.serveroneplugin.items.CreditCard;
 import de.serverone.source.builder.DefaultMenuBuilder;
 import de.serverone.source.builder.ItemBuilder;
 
+//This class is used for storing the Data of a playershop
+
 public class PlayerShop {
     private Inventory inv;
     private List<ShopLink> links = new ArrayList<ShopLink>();
@@ -24,6 +26,7 @@ public class PlayerShop {
     private ItemStack shopCore, linkList;
     private CreditCard creditCard;
     private String owner;
+    private Barrel shopBarrel;
     int page = 0;
 
     public static PlayerShop getPlayerShop(Location pos, Player player) {
@@ -38,8 +41,8 @@ public class PlayerShop {
     }
 
     private PlayerShop(Block lectern, Player player) {
-	Barrel barrel = (Barrel) lectern.getLocation().subtract(0, 1, 0).getBlock().getState();
-	Inventory container = barrel.getInventory();
+	shopBarrel = (Barrel) lectern.getLocation().subtract(0, 1, 0).getBlock().getState();
+	Inventory container = shopBarrel.getInventory();
 
 	this.player = player;
 	this.creditCard = CreditCard.getCard(container.getItem(12));
@@ -77,20 +80,32 @@ public class PlayerShop {
     }
 
     public void buy(int index) {
+	if(!this.isStilActive()) {
+	    player.sendMessage("§cEs wurden Änderungen am Shop vorgenommen");
+	    player.closeInventory();
+	    return;
+	}
+	
 	links.get(index).buy(player, creditCard);
-
 	reloadInv();
+	player.openInventory(getShopInv());
     }
 
     public void sell(int index) {
+	if(!this.isStilActive()) {
+	    player.sendMessage("§cEs wurden Änderungen am Shop vorgenommen");
+	    player.closeInventory();
+	    return;
+	}
+	
 	links.get(index).sell(player, creditCard);
-
+	player.openInventory(getShopInv());
 	reloadInv();
     }
 
     public void shutdowLink(int index) {
 	if (!links.get(index).isStilActive()) {
-	    System.out.println("cant do that");
+	    player.sendMessage("§cDer Link ist bereits deaktiviert");
 	    return;
 	}
 	links.get(index).changeActive();
@@ -104,6 +119,19 @@ public class PlayerShop {
 
     public ShopLink getLink(int index) {
 	return links.get(index);
+    }
+    
+    public boolean isStilActive() {
+	if(!(shopBarrel.getBlock().getLocation().getBlock().getState() instanceof Barrel)) return false;
+	Inventory container = shopBarrel.getInventory();
+	if(!(container.getItem(12) == (creditCard.getItem()))) {
+	    ItemStack card = container.getItem(12);
+	    if(card == null) return false;
+	    creditCard = CreditCard.getCard(card);
+	}
+	if(!shopCore.isSimilar(container.getItem(13))) return false;
+	if(!linkList.isSimilar(container.getItem(14))) return false;
+	return true;
     }
 
     private static boolean isValid(Block lectern) {

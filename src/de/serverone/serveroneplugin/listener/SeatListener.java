@@ -29,6 +29,8 @@ public class SeatListener implements Listener {
 		return;
 	    if (event.getBlockFace() != BlockFace.UP)
 		return;
+	    if(map.containsKey(player)) return;
+	    
 	    Location loc = event.getClickedBlock().getLocation();
 
 	    if (!loc.add(0, 1, 0).getBlock().isPassable())

@@ -14,9 +14,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+// This class is controlling all interactions of a player with an custom player shop
+
 public class PlayerShopMain implements Listener {
     protected HashMap<Player, PlayerShop> shops = new HashMap<>();
-
+    
     @EventHandler
     public void openMainShop(PlayerInteractEvent event) {
 	// filter
@@ -36,7 +38,8 @@ public class PlayerShopMain implements Listener {
 	shops.put(player, shop);
 	event.setCancelled(true);
     }
-
+    
+    
     @EventHandler
     public void onShopInteract(InventoryClickEvent event) {
 	if (!(event.getWhoClicked() instanceof Player)) return;
@@ -61,7 +64,6 @@ public class PlayerShopMain implements Listener {
 	    if(lore.startsWith("§8Index: ")) {
 		if(event.getClick() == ClickType.LEFT) shop.buy(Integer.parseInt(lore.replace("§8Index: ", "")));
 		else if(event.getClick() == ClickType.RIGHT) shop.sell(Integer.parseInt(lore.replace("§8Index: ", "")));
-		player.openInventory(shop.getShopInv());
 		break;
 	    }
 	}
