@@ -6,30 +6,17 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.serverone.serveroneplugin.commands.MoneyCommand;
-import de.serverone.serveroneplugin.commands.SkillCommand;
-import de.serverone.serveroneplugin.commands.SprachFehlerCommand;
-import de.serverone.serveroneplugin.commands.VoteCommand;
-import de.serverone.serveroneplugin.commands.sopCommand;
-import de.serverone.serveroneplugin.commands.toggleOpCommand;
-import de.serverone.serveroneplugin.items.CreditCardController;
-import de.serverone.serveroneplugin.items.ShulkerSword;
-import de.serverone.serveroneplugin.items.VeinMinerAxe;
-import de.serverone.serveroneplugin.items.VeinMinerPiackaxe;
-import de.serverone.serveroneplugin.listener.LeaveWelcomeMessage;
-import de.serverone.serveroneplugin.listener.PlayerDeathListener;
-import de.serverone.serveroneplugin.listener.SeatListener;
-import de.serverone.serveroneplugin.listener.VoidFallListener;
-import de.serverone.serveroneplugin.listener.antiSpawnDestroyListener;
-import de.serverone.serveroneplugin.listener.newPlayerListener;
+import de.serverone.serveroneplugin.commands.*;
+import de.serverone.serveroneplugin.items.*;
+import de.serverone.serveroneplugin.listener.*;
 import de.serverone.serveroneplugin.playerShop.PlayerShopMain;
 import de.serverone.serveroneplugin.playerShop.ShopRegisterListener;
 import de.serverone.serveroneplugin.playerShop.SimplePlayerShop;
-import de.serverone.serveroneplugin.serverOneController.Controller_Listener;
-import de.serverone.serveroneplugin.serverOneController.Warp;
 import de.serverone.serveroneplugin.serverShop.ShopInvController;
 import de.serverone.serveroneplugin.serverShop.ShopVillagerController;
 import de.serverone.serveroneplugin.serverShop.UtilVillagerController;
+import de.serverone.serveroneplugin.server_one_controller.SOCListener;
+import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.serveroneplugin.structures.EffectCrystallListener;
 import de.serverone.serveroneplugin.structures.Elevator;
 import de.serverone.source.builder.ItemBuilder;
@@ -52,7 +39,7 @@ public class Loader {
 	pluginManager.registerEvents(new Elevator(), plugin);
 
 	// CustomMenus
-	pluginManager.registerEvents(new Controller_Listener(), plugin);
+	pluginManager.registerEvents(new SOCListener(), plugin);
 	pluginManager.registerEvents(new ShopInvController(), plugin);
 	pluginManager.registerEvents(new ShopVillagerController(), plugin);
 	pluginManager.registerEvents(new ShopRegisterListener(), plugin);

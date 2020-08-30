@@ -1,4 +1,4 @@
-package de.serverone.serveroneplugin.serverOneController;
+package de.serverone.serveroneplugin.server_one_controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import de.serverone.source.builder.SkullBuilder;
 import de.serverone.source.util.ServerOneWorldGuard;
 
 public class WorldGuardController {
-    public static void worldGuardListener(Player player, String displayname) {
+    public static void worldGuardListener(Player player, String displayname, ServerOneController controller) {
 	ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
 	if (region == null) {
 	    player.sendMessage("§cDu hast keinen Zugriff auf diese Region!");
@@ -77,16 +77,16 @@ public class WorldGuardController {
 	}
 	switch (displayname) {
 	case "§6§lzurück":
-	    player.openInventory(new Inventorys(player).getMainInv());
+	    controller.openPrevirous();
 	    break;
 	case "§bMitglieder":
-	    player.openInventory(getGsMemberInv(region, player));
+	    player.openInventory(getGsMemberInv(player));
 	    break;
 	}
 
     }
 
-    public static void gsMemberListener(Player player, String displayname) {
+    public static void gsMemberListener(Player player, String displayname, ServerOneController controller) {
 	switch (displayname) {
 	case "§6§lzurück":
 	    player.openInventory(getWGInv(player));
@@ -95,7 +95,7 @@ public class WorldGuardController {
     }
 
     public static Inventory getWGInv(Player player) {
-	Inventory inv = new DefaultMenuBuilder(ConInv.GS_SETTINGS.getInvName())
+	Inventory inv = new DefaultMenuBuilder(ControllerWindow.GS_SETTINGS.invName)
 		.setBarSide(new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("§b§lGrundstückseinstellungen")
 			.setMenuItem().build())
 		.build();
@@ -117,11 +117,11 @@ public class WorldGuardController {
 	return inv;
     }
 
-    public static Inventory getGsMemberInv(ProtectedRegion region, Player player) {
-	Inventory inv = new DefaultMenuBuilder(ConInv.GS_MEMBERS.getInvName()).setBarSide(
+    public static Inventory getGsMemberInv(Player player) {
+	Inventory inv = new DefaultMenuBuilder(ControllerWindow.GS_MEMBERS.invName).setBarSide(
 		new ItemBuilder(Material.PLAYER_HEAD).setName("§b§lGrundstücksmitglieder").setMenuItem().build())
 		.build();
-	
+	ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
 	inv.setItem(18, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler").setMenuItem().build());
 	inv.setItem(36, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder").setMenuItem().build());
 	

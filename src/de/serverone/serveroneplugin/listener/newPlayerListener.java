@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import de.serverone.serveroneplugin.serverOneController.Warp;
+import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.source.builder.ItemBuilder;
 
 public class newPlayerListener implements Listener {

@@ -1,4 +1,4 @@
-package de.serverone.serveroneplugin.serverOneController;
+package de.serverone.serveroneplugin.server_one_controller;
 
 public enum Skill {
 	EXCAVATION("excavation", "§6§l"),
