@@ -4,7 +4,7 @@
 	<classpathentry kind="lib" path="../libs/craftbukkit-1.16.1.jar"/>
 	<classpathentry kind="lib" path="../libs/ServerOneSource.jar"/>
 	<classpathentry kind="lib" path="../libs/worldedit-bukkit-7.1.0.jar"/>
-	<classpathentry kind="lib" path="../libs/worldguard-bukkit-7.0.2.jar"/>
+	<classpathentry kind="lib" path="../libs/worldguard-bukkit-7.0.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,6 +10,7 @@ import de.serverone.source.builder.DefaultMenuBuilder;
 import de.serverone.source.builder.ItemBuilder;
 import de.serverone.source.builder.SkullBuilder;
 import de.serverone.source.util.ServerOneConfig;
+import de.serverone.source.util.ServerOneWorldGuard;
 
 public class Inventorys {
     Inventory inv = null;
@@ -35,7 +36,7 @@ public class Inventorys {
 	inv.setItem(24, new ItemBuilder(Material.BOOK).setName("§6§lDas Regelwerk")
 		.setLore("§clese das mächtige Regelwerk").setMenuItem().build());
 
-	if (ServerOnePlugin.worldGuardIsEnabled())
+	if (ServerOnePlugin.worldGuardIsEnabled() && ServerOneWorldGuard.getOwnersRegion(player) != null)
 	    inv.setItem(38, new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("§b§lGrundstückseinstellungen")
 		    .setMenuItem().build());
 	else
@@ -180,19 +181,6 @@ public class Inventorys {
 
 	inv.setItem(36, new ItemBuilder(Material.WRITABLE_BOOK).setName("§b§lset Warppoints").setMenuItem().build());
 
-	return inv;
-    }
-
-    public Inventory getWGInv() {
-	inv = new DefaultMenuBuilder(ConInv.GS_SETTINGS.getInvName())
-		.setBarSide(new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("§b§lGrundstückseinstellungen")
-			.setMenuItem().build())
-		.build();
-	inv.setItem(19, new ItemBuilder(Material.OAK_FENCE_GATE).setName("§bInteract").setMenuItem().build());
-	inv.setItem(21, new ItemBuilder(Material.SNOW).setName("§bSchneefall").setMenuItem().build());
-	inv.setItem(23, new ItemBuilder(Material.MINECART).setName("§bFahrzeuge").setMenuItem().build());
-	inv.setItem(25, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bPVP").setMenuItem().build());
-	inv.setItem(37, new ItemBuilder(Material.ZOMBIE_HEAD).setName("§bMobspawning").setMenuItem().build());
 	return inv;
     }
 

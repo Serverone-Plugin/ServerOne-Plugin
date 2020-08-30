@@ -6,7 +6,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.serverone.source.builder.ItemBuilder;
 import de.serverone.serveroneplugin.commands.MoneyCommand;
 import de.serverone.serveroneplugin.commands.SkillCommand;
 import de.serverone.serveroneplugin.commands.SprachFehlerCommand;
@@ -33,6 +32,7 @@ import de.serverone.serveroneplugin.serverShop.ShopVillagerController;
 import de.serverone.serveroneplugin.serverShop.UtilVillagerController;
 import de.serverone.serveroneplugin.structures.EffectCrystallListener;
 import de.serverone.serveroneplugin.structures.Elevator;
+import de.serverone.source.builder.ItemBuilder;
 
 public class Loader {
     public static void load(JavaPlugin plugin) {

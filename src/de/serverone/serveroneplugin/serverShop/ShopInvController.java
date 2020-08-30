@@ -8,9 +8,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.source.builder.ItemBuilder;
 import de.serverone.source.util.ServerOneConfig;
-import de.serverone.serveroneplugin.ServerOnePlugin;
 
 public class ShopInvController implements Listener {
     ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "shops.yml");
