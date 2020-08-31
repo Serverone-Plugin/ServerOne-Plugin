@@ -108,6 +108,7 @@ public class ShopRegisterListener implements Listener {
 	// switching
 	switch (sign.getLine(0).toLowerCase()) {
 	case "shoplink":
+	case "shop-link":
 	case "§4§lshop-link aus":
 	    sign.setLine(0, "§a§lShop-Link an");
 	    break;

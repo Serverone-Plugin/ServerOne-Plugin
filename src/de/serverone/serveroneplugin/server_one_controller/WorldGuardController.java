@@ -75,7 +75,7 @@ public class WorldGuardController {
 	    }
 	    player.sendMessage(
 		    "§aDer Flag §e" + flagName + "§a wurde erfolgreich verändert §e(" + state.toString() + ")");
-	    controller.open();
+	    controller.open(ControllerWindow.GS_SETTINGS);
 	    return;
 	}
 	switch (displayname) {
