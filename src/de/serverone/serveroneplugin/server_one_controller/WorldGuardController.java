@@ -1,6 +1,7 @@
 package de.serverone.serveroneplugin.server_one_controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,7 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
@@ -72,25 +75,92 @@ public class WorldGuardController {
 	    }
 	    player.sendMessage(
 		    "§aDer Flag §e" + flagName + "§a wurde erfolgreich verändert §e(" + state.toString() + ")");
-	    player.openInventory(getWGInv(player));
+	    controller.open();
 	    return;
 	}
 	switch (displayname) {
-	case "§6§lzurück":
-	    controller.openPrevirous();
-	    break;
 	case "§bMitglieder":
-	    player.openInventory(getGsMemberInv(player));
+	    controller.open(ControllerWindow.GS_MEMBERS);
 	    break;
 	}
 
     }
 
-    public static void gsMemberListener(Player player, String displayname, ServerOneController controller) {
-	switch (displayname) {
-	case "§6§lzurück":
-	    player.openInventory(getWGInv(player));
+    public static void gsMemberListener(Player player, String displayname, int slot, ItemStack item,
+	    ServerOneController controller) {
+	ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
+	if (region == null) {
+	    player.sendMessage("§cDu hast keinen Zugriff auf diese Region!");
+	    player.closeInventory();
+	    return;
+	}
+	int playerpos = (int) controller.getMeta("gssettings").get("playerpos");
+	int memberpos = (int) controller.getMeta("gssettings").get("memberpos");
+	if (slot >= 19 && slot <= 25 && displayname != "") {
+	    DefaultDomain members = region.getMembers();
+	    Player member = ((List<Player>) controller.getMeta("gssettings").get("potencialMembers"))
+		    .get(slot - 19 + playerpos);
+	    if (member == null || displayname.substring(1).equals(member.getName())) {
+		player.sendMessage("§cDer ausgewählte Spieler ist nicht mehr online!");
+		controller.open(ControllerWindow.GS_MEMBERS);
+		return;
+	    }
+
+	    members.addPlayer(member.getUniqueId());
+	    region.setMembers(members);
+
+	    controller.open(ControllerWindow.GS_MEMBERS);
+	    player.sendMessage("§aDu hast §e" + member.getName() + " §adeinem GS hinzugefügt!");
+	    return;
+	}
+	if (slot >= 37 && slot <= 43 && displayname != "") {
+	    DefaultDomain members = region.getMembers();
+	    UUID member = ((List<UUID>) controller.getMeta("gssettings").get("members")).get(slot - 37 + memberpos);
+	    if (member == null || displayname.substring(1).equals(Bukkit.getOfflinePlayer(member).getName())) {
+		controller.open(ControllerWindow.GS_MEMBERS);
+		player.sendMessage("§cEs ist ein Fehler aufgetreten");
+		return;
+	    }
+	    members.removePlayer(member);
+	    region.setMembers(members);
+
+	    player.openInventory(getGsMemberInv(player, controller));
+	    player.sendMessage(
+		    "§aDu hast §e" + Bukkit.getOfflinePlayer(member).getName() + " §avon deinem GS entfernt!");
+	    return;
+	}
+	boolean bool = false;
+	switch (slot) {
+	case 18:
+	    if (playerpos > 0) {
+		playerpos--;
+		bool = true;
+	    }
 	    break;
+	case 26:
+	    if (playerpos + 7 < ((List<Player>) controller.getMeta("gssettings").get("potencialMembers")).size()) {
+		playerpos++;
+		bool = true;
+	    }
+	    break;
+	case 36:
+	    if (memberpos > 0) {
+		memberpos--;
+		bool = true;
+	    }
+	    break;
+	case 44:
+	    if (memberpos + 7 < ((List<UUID>) controller.getMeta("gssettings").get("members")).size()) {
+		memberpos++;
+		bool = true;
+	    }
+
+	    break;
+	}
+	if (bool) {
+	    controller.getMeta("gssettings").put("memberpos", memberpos);
+	    controller.getMeta("gssettings").put("playerpos", playerpos);
+	    controller.open(ControllerWindow.GS_MEMBERS);
 	}
     }
 
@@ -117,40 +187,68 @@ public class WorldGuardController {
 	return inv;
     }
 
-    public static Inventory getGsMemberInv(Player player) {
+    public static Inventory getGsMemberInv(Player player, ServerOneController controller) {
+	HashMap<String, Object> map = controller.getMeta("gssettings");
+	if (map == null) {
+	    controller.addMeta("gssettings");
+	    map = controller.getMeta("gssettings");
+	}
+	if (!map.containsKey("memberpos")) {
+	    map.put("memberpos", 0);
+	}
+	if (!map.containsKey("playerpos")) {
+	    map.put("playerpos", 0);
+	}
+	Integer memberPos = (int) map.get("memberpos");
+	Integer playerPos = (int) map.get("playerpos");
+
 	Inventory inv = new DefaultMenuBuilder(ControllerWindow.GS_MEMBERS.invName).setBarSide(
 		new ItemBuilder(Material.PLAYER_HEAD).setName("§b§lGrundstücksmitglieder").setMenuItem().build())
 		.build();
 	ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
-	inv.setItem(18, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler").setMenuItem().build());
-	inv.setItem(36, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder").setMenuItem().build());
-	
-	int memberPos = 0;
-	int playerPos = 0;
+	inv.setItem(18,
+		new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler").setMenuItem().build());
+	inv.setItem(36, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder")
+		.setMenuItem().build());
+	inv.setItem(26,
+		new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler").setMenuItem().build());
+	inv.setItem(44, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder")
+		.setMenuItem().build());
+
 	List<UUID> memberUuids = new ArrayList<>(region.getMembers().getUniqueIds());
 	List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-	
-	for (int i=37; i <= 43; i++) {
-	    if (memberPos >= memberUuids.size())
-		break;
-	    inv.setItem(i, new SkullBuilder(Bukkit.getOfflinePlayer(memberUuids.get(memberPos)))
-		    .setName("§b" + Bukkit.getOfflinePlayer(memberUuids.get(memberPos)).getName()).addLore("§8"+memberUuids.get(memberPos)).setMenuItem().build());
-	    memberPos++;
+
+	map.put("members", memberUuids);
+	for (int i = 37; i <= 43; i++) {
+	    if (!(memberPos >= memberUuids.size())) {
+		inv.setItem(i,
+			new SkullBuilder(Bukkit.getOfflinePlayer(memberUuids.get(memberPos)))
+				.setName("§b" + Bukkit.getOfflinePlayer(memberUuids.get(memberPos)).getName())
+				.setMenuItem().build());
+		memberPos++;
+	    } else
+		inv.setItem(i, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setMenuItem().build());
+
 	}
-	for(UUID offlinePlayer : memberUuids) {
+	for (UUID offlinePlayer : memberUuids) {
 	    Player nowPlayer = Bukkit.getPlayer(offlinePlayer);
-	    if(nowPlayer != null) {
+	    if (nowPlayer != null) {
 		onlinePlayers.remove(nowPlayer);
 	    }
 	}
 	onlinePlayers.remove(player);
-	for(int i = 19; i <= 25; i++) {
-	    if(playerPos >= onlinePlayers.size())
-		break;
-	    inv.setItem(i, new SkullBuilder(onlinePlayers.get(playerPos)).setName("§b"+onlinePlayers.get(playerPos).getName()).setMenuItem().build());
-	    playerPos++;
+
+	map.put("potencialMembers", onlinePlayers);
+	for (int i = 19; i <= 25; i++) {
+	    if (!(playerPos >= onlinePlayers.size())) {
+		inv.setItem(i, new SkullBuilder(onlinePlayers.get(playerPos))
+			.setName("§b" + onlinePlayers.get(playerPos).getName()).setMenuItem().build());
+		playerPos++;
+	    } else
+		inv.setItem(i, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setMenuItem().build());
+
 	}
-	
+
 	return inv;
     }
 

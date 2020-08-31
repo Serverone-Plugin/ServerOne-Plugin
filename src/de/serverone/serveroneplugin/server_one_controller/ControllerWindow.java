@@ -13,24 +13,26 @@ import de.serverone.source.util.ServerOneConfig;
 import de.serverone.source.util.ServerOneWorldGuard;
 
 public enum ControllerWindow {
-    MAIN("§6§lServerOneController", null), SKILLS("§6§lSkills", MAIN), SKILL_SUB("§6§lSkill ", SKILLS),
-    WARPS("§6§lWarps", MAIN), TPA("§6§lSpieler-Teleportationen", WARPS), SETWARP("§6§lsetWarps", WARPS),
-    PREMIUM("§6§lPremium", MAIN), GS_SETTINGS("§6§lGrundstückseinstellungen", MAIN),
-    GS_MEMBERS("§6§lGrundstücksmitglieder", GS_SETTINGS);
+    MAIN("§6§lServerOneController", null, true), SKILLS("§6§lSkills", MAIN, true), SKILL_SUB("§6§lSkill ", SKILLS, false),
+    WARPS("§6§lWarps", MAIN, true), TPA("§6§lSpieler-Teleportationen", WARPS, false), SETWARP("§6§lsetWarps", WARPS, false),
+    PREMIUM("§6§lPremium", MAIN, true), GS_SETTINGS("§6§lGrundstückseinstellungen", MAIN, false),
+    GS_MEMBERS("§6§lGrundstücksmitglieder", GS_SETTINGS, false);
 
     final String invName;
     final ControllerWindow previrous;
-
-    private ControllerWindow(String invName, ControllerWindow previrous) {
+    final boolean isStartPoint;
+    
+    private ControllerWindow(String invName, ControllerWindow previrous, boolean startpoint) {
 	this.invName = invName;
 	this.previrous = previrous;
+	this.isStartPoint = startpoint;
     }
 
-    public void open(Player player) {
-	player.openInventory(getControllerInventory(player));
+    public void open(Player player, ServerOneController controller) {
+	player.openInventory(getControllerInventory(player, controller));
     }
 
-    private Inventory getControllerInventory(Player player) {
+    private Inventory getControllerInventory(Player player, ServerOneController controller) {
 	Inventory inv = new DefaultMenuBuilder("§cfehler").build();
 	ServerOneConfig playerData = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
 	int warpLimit = playerData.getPlayerInt(player, "stats.warplimit");
@@ -183,7 +185,7 @@ public enum ControllerWindow {
 	    inv = WorldGuardController.getWGInv(player);
 	    break;
 	case GS_MEMBERS:
-	    inv = WorldGuardController.getGsMemberInv(player);
+	    inv = WorldGuardController.getGsMemberInv(player, controller);
 	    break;
 	case SKILLS:
 	    inv = new DefaultMenuBuilder(this.invName)

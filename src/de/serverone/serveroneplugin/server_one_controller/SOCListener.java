@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.serverone.serveroneplugin.ServerOnePlugin;
@@ -21,6 +23,16 @@ public class SOCListener implements Listener {
     final static HashMap<Player, ServerOneController> controllers = new HashMap<>();
 
     @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+	createController(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+	controllers.remove(event.getPlayer());
+    }
+
+    @EventHandler
     public void openServerOneController(PlayerInteractEvent event) {
 	ItemStack item = event.getItem();
 	Player player = event.getPlayer();
@@ -29,12 +41,13 @@ public class SOCListener implements Listener {
 		|| !item.getItemMeta().getDisplayName().equals("§6§lServerOneController"))
 	    return;
 	if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-	    if (controllers.containsKey(player))
-		controllers.remove(player);
-	    controllers.put(player, new ServerOneController(player));
-	    controllers.get(player).open(ControllerWindow.MAIN);
+	    controllers.get(player).open();
 	    event.setCancelled(true);
 	}
+    }
+
+    public static void createController(Player player) {
+	controllers.put(player, new ServerOneController(player));
     }
 
     @EventHandler
@@ -52,10 +65,11 @@ public class SOCListener implements Listener {
 	    return;
 	final Player player = (Player) event.getWhoClicked();
 	final String displayname = event.getCurrentItem().getItemMeta().getDisplayName();
-	final int slot = event.getSlot();
 	final String viewName = event.getView().getTitle();
 	final ServerOneController controller = controllers.get(player);
-
+	final int slot = event.getSlot();
+	boolean validInv = false;
+	
 	if (viewName.equals(ControllerWindow.MAIN.invName)) {
 	    switch (displayname) {
 	    case "§b§lSkills":
@@ -78,18 +92,14 @@ public class SOCListener implements Listener {
 		}
 		break;
 	    case "§6§lDas Regelwerk":
-		controller.close();
 		player.openBook(BookGetter.getServerRules());
 	    default:
 		break;
 	    }
-	    return;
 	}
 	if (viewName.equals(ControllerWindow.SKILLS.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		controller.openPrevirous();
-		break;
 	    case "§cExcavation":
 		break;
 	    case "§cHunting":
@@ -101,13 +111,10 @@ public class SOCListener implements Listener {
 	    default:
 		break;
 	    }
-	    return;
 	}
 	if (viewName.equals(ControllerWindow.WARPS.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		controller.openPrevirous();
-		break;
 	    case "§6§lSpawn":
 		Warp.Spawn.warp(player);
 		break;
@@ -135,14 +142,11 @@ public class SOCListener implements Listener {
 	    default:
 		break;
 	    }
-	    return;
 	}
 
 	if (viewName.equals(ControllerWindow.SETWARP.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		controller.openPrevirous();
-		break;
 	    case "§b§lset Warppoint 1":
 		Warp.Point_1.setWarppoint(player);
 		player.closeInventory();
@@ -162,10 +166,8 @@ public class SOCListener implements Listener {
 	    }
 	}
 	if (viewName.equals(ControllerWindow.PREMIUM.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		controller.openPrevirous();
-		break;
 	    case "§d§lEnderChest":
 		event.getWhoClicked().openInventory(event.getWhoClicked().getEnderChest());
 		break;
@@ -181,13 +183,22 @@ public class SOCListener implements Listener {
 	    return;
 	}
 	if (viewName.equals(ControllerWindow.GS_SETTINGS.invName)) {
-	    if(ServerOnePlugin.worldGuardIsEnabled()) {
+	    validInv = true;
+	    if (ServerOnePlugin.worldGuardIsEnabled()) {
 		WorldGuardController.worldGuardListener(player, displayname, controller);
 	    }
 	}
 	if (viewName.equals(ControllerWindow.GS_MEMBERS.invName)) {
-	    if(ServerOnePlugin.worldGuardIsEnabled()) {
-		WorldGuardController.gsMemberListener(player, displayname, controller);
+	    validInv = true;
+	    if (ServerOnePlugin.worldGuardIsEnabled()) {
+		WorldGuardController.gsMemberListener(player, displayname, slot, event.getCurrentItem(), controller);
+	    }
+	}
+	if(validInv) {
+	    switch(displayname) {
+	    case "§6§lzurück":
+		controller.openPrevirous();
+		break;
 	    }
 	}
     }
