@@ -11,8 +11,7 @@ public class ServerOnePlugin extends JavaPlugin {
 
     private static ServerOnePlugin plugin;
     private static WorldGuardPlugin wgPlugin = null;
-    
-    static boolean worldGuardIsEnabled = false;
+    private static boolean worldGuardIsEnabled = false;
     
     // onEnable
     public void onEnable() {
@@ -44,5 +43,8 @@ public class ServerOnePlugin extends JavaPlugin {
 
     public static WorldGuardPlugin getWorldGuard() {
 	return wgPlugin;
+    }
+    public static boolean worldGuardIsEnabled() {
+	return worldGuardIsEnabled;
     }
 }

@@ -1,5 +1,6 @@
-package de.serverone.serveroneplugin.serverOneController;
+package de.serverone.serveroneplugin.server_one_controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -9,23 +10,44 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.serveroneplugin.serverShop.Inventory_Villager;
 import de.serverone.serveroneplugin.universalGetter.BookGetter;
+import de.serverone.source.util.ServerOneWorldGuard;
 
-public class Controller_Listener implements Listener {
+public class SOCListener implements Listener {
+    final static HashMap<Player, ServerOneController> controllers = new HashMap<>();
+
     @EventHandler
-    public void NavigatorOpenListener(PlayerInteractEvent event) {
-	Inventorys invs = new Inventorys(event.getPlayer());
+    public void onPlayerJoin(PlayerJoinEvent event) {
+	createController(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+	controllers.remove(event.getPlayer());
+    }
+
+    @EventHandler
+    public void openServerOneController(PlayerInteractEvent event) {
 	ItemStack item = event.getItem();
+	Player player = event.getPlayer();
+
 	if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()
 		|| !item.getItemMeta().getDisplayName().equals("§6§lServerOneController"))
 	    return;
 	if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+	    controllers.get(player).open();
 	    event.setCancelled(true);
-	    event.getPlayer().openInventory(invs.getMainInv());
 	}
+    }
+
+    public static void createController(Player player) {
+	controllers.put(player, new ServerOneController(player));
     }
 
     @EventHandler
@@ -38,41 +60,46 @@ public class Controller_Listener implements Listener {
 			|| event.getCurrentItem().getItemMeta().hasDisplayName()))
 	    return;
 
-	final Player player = (Player) event.getWhoClicked();
-	final Inventorys invs = new Inventorys(player);
-	final String displayname = event.getCurrentItem().getItemMeta().getDisplayName();
 	final List<String> lores = event.getCurrentItem().getItemMeta().getLore();
-
 	if (lores == null || !lores.contains("§8MenuItem"))
 	    return;
-
-	if (event.getView().getTitle() == ConInv.MAIN.getInvName()) {
+	final Player player = (Player) event.getWhoClicked();
+	final String displayname = event.getCurrentItem().getItemMeta().getDisplayName();
+	final String viewName = event.getView().getTitle();
+	final ServerOneController controller = controllers.get(player);
+	final int slot = event.getSlot();
+	boolean validInv = false;
+	
+	if (viewName.equals(ControllerWindow.MAIN.invName)) {
 	    switch (displayname) {
 	    case "§b§lSkills":
-		player.openInventory(invs.getSkillInv());
+		controller.open(ControllerWindow.SKILLS);
 		break;
 	    case "§b§lWarps":
-		player.openInventory(invs.getWarpInv());
+		controller.open(ControllerWindow.WARPS);
 		break;
 	    case "§6§lPremium":
-		if(player.hasPermission("serveroneplugin.premium"))
-		    player.openInventory(invs.getPremiumInv());
-		else player.sendMessage("§cDu bist kein Premium!");
+		if (player.hasPermission("serveroneplugin.premium"))
+		    controller.open(ControllerWindow.PREMIUM);
+		else
+		    player.sendMessage("§cDu bist kein Premium!");
+		break;
+	    case "§b§lGrundstückseinstellungen":
+		if (ServerOnePlugin.worldGuardIsEnabled() && ServerOneWorldGuard.getOwnersRegion(player) != null) {
+		    controller.open(ControllerWindow.GS_SETTINGS);
+		} else {
+		    player.sendMessage("§cDu hast keinen Zugriff auf diese Region!");
+		}
 		break;
 	    case "§6§lDas Regelwerk":
 		player.openBook(BookGetter.getServerRules());
 	    default:
 		break;
 	    }
-	    return;
 	}
-
-	// SkillController
-	if (event.getView().getTitle() == ConInv.SKILLS.getInvName()) {
+	if (viewName.equals(ControllerWindow.SKILLS.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		player.openInventory(invs.getMainInv());
-		break;
 	    case "§cExcavation":
 		break;
 	    case "§cHunting":
@@ -84,43 +111,10 @@ public class Controller_Listener implements Listener {
 	    default:
 		break;
 	    }
-	    return;
 	}
-	/*
-	 * //SKILLS NOT AVAIBLE JET// //Skill-Excavation if(event.getView().getTitle()
-	 * == InvNameGetter.getInvSkillsExc()) { event.setCancelled(true);
-	 * 
-	 * switch(displayname) { case "§6§lzurück":
-	 * player.openInventory(SOCInv.SKILLS.getInventory(player)); break; default:
-	 * break; } return; }
-	 * 
-	 * //Skill-Hunting if(event.getView().getTitle() ==
-	 * InvNameGetter.getInvSkillsHunt()) { event.setCancelled(true);
-	 * switch(displayname) { case "§6§lzurück":
-	 * player.openInventory(SOCInv.SKILLS.getInventory(player)); break; default:
-	 * break; } return; }
-	 * 
-	 * //Skill-Mine if(event.getView().getTitle() ==
-	 * InvNameGetter.getInvSkillsMine()) { event.setCancelled(true);
-	 * 
-	 * switch(displayname) { case "§6§lzurück":
-	 * player.openInventory(SOCInv.SKILLS.getInventory(player)); break; default:
-	 * break; } return; }
-	 * 
-	 * //Skill-Farming if(event.getView().getTitle() ==
-	 * InvNameGetter.getInvSkillsFarm()) { event.setCancelled(true);
-	 * 
-	 * switch(displayname) { case "§6§lzurück":
-	 * player.openInventory(SOCInv.SKILLS.getInventory(player)); break; default:
-	 * break; } return; }
-	 */
-
-	// WarpController
-	if (event.getView().getTitle() == ConInv.WARPS.getInvName()) {
+	if (viewName.equals(ControllerWindow.WARPS.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		player.openInventory(invs.getMainInv());
-		break;
 	    case "§6§lSpawn":
 		Warp.Spawn.warp(player);
 		break;
@@ -143,20 +137,16 @@ public class Controller_Listener implements Listener {
 		Warp.Point_4.warp(player);
 		break;
 	    case "§b§lset Warppoints":
-		player.openInventory(invs.getSetWarpInv());
+		controller.open(ControllerWindow.SETWARP);
 		break;
 	    default:
 		break;
 	    }
-	    return;
 	}
 
-	// setWarpController
-	if (event.getView().getTitle() == ConInv.SETWARP.getInvName()) {
+	if (viewName.equals(ControllerWindow.SETWARP.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		player.openInventory(invs.getWarpInv());
-		break;
 	    case "§b§lset Warppoint 1":
 		Warp.Point_1.setWarppoint(player);
 		player.closeInventory();
@@ -175,13 +165,9 @@ public class Controller_Listener implements Listener {
 		break;
 	    }
 	}
-
-	// PremiumController
-	if (event.getView().getTitle() == ConInv.PREMIUM.getInvName()) {
+	if (viewName.equals(ControllerWindow.PREMIUM.invName)) {
+	    validInv = true;
 	    switch (displayname) {
-	    case "§6§lzurück":
-		player.openInventory(invs.getMainInv());
-		break;
 	    case "§d§lEnderChest":
 		event.getWhoClicked().openInventory(event.getWhoClicked().getEnderChest());
 		break;
@@ -195,6 +181,25 @@ public class Controller_Listener implements Listener {
 		break;
 	    }
 	    return;
+	}
+	if (viewName.equals(ControllerWindow.GS_SETTINGS.invName)) {
+	    validInv = true;
+	    if (ServerOnePlugin.worldGuardIsEnabled()) {
+		WorldGuardController.worldGuardListener(player, displayname, controller);
+	    }
+	}
+	if (viewName.equals(ControllerWindow.GS_MEMBERS.invName)) {
+	    validInv = true;
+	    if (ServerOnePlugin.worldGuardIsEnabled()) {
+		WorldGuardController.gsMemberListener(player, displayname, slot, event.getCurrentItem(), controller);
+	    }
+	}
+	if(validInv) {
+	    switch(displayname) {
+	    case "§6§lzurück":
+		controller.openPrevirous();
+		break;
+	    }
 	}
     }
 }

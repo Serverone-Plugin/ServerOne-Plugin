@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import de.serverone.serveroneplugin.ServerOnePlugin;
-import de.serverone.serveroneplugin.serverOneController.Warp;
+import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.source.util.ServerOneConfig;
 
 public class VoidFallListener implements Listener {

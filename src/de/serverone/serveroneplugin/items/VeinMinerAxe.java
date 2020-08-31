@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.source.util.ServerOneWorldGuard;
 
 public class VeinMinerAxe implements Listener {
@@ -33,7 +34,7 @@ public class VeinMinerAxe implements Listener {
 	    if (name.equalsIgnoreCase("§6Lumber-Axe")) {
 		int count = 0;
 		for (int i = 0; i <= 15; i++) {
-		    if (!ServerOneWorldGuard.canBreak(block.getLocation(), player))
+		    if (ServerOnePlugin.worldGuardIsEnabled() && !ServerOneWorldGuard.canBreak(block.getLocation(), player))
 			return;
 		    if (item.getType().getMaxDurability() - item.getDurability() <= i)
 			break;

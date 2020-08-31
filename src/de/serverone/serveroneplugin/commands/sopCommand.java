@@ -19,7 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.serverone.serveroneplugin.ServerOnePlugin;
-import de.serverone.serveroneplugin.serverOneController.Warp;
+import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.serveroneplugin.test.TestFunctions;
 import de.serverone.serveroneplugin.universalGetter.ItemGetter;
 import de.serverone.source.builder.ItemBuilder;

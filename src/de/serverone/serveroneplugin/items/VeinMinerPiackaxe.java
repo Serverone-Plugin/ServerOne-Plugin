@@ -96,8 +96,11 @@ public class VeinMinerPiackaxe implements Listener {
 	    if (dur + 2 > maxDur)
 		return;
 	    if (blockLoc.add(0, -1, 0).getBlock().getType() == mat) {
-		if (!ServerOneWorldGuard.canBreak(blockLoc, player))
-		    return;
+		if (ServerOnePlugin.worldGuardIsEnabled()) {
+		    if(!ServerOneWorldGuard.canBreak(blockLoc, player))
+			return;
+		}
+		    
 		blockLoc.getBlock().breakNaturally();
 		count++;
 	    }
@@ -111,7 +114,7 @@ public class VeinMinerPiackaxe implements Listener {
 		for (int y = (int) blockLoc.getY(); y < blockLoc.getY() + 3; y++) {
 		    for (int z = (int) blockLoc.getZ(); z < blockLoc.getZ() + 3; z++) {
 			loc2 = new Location(player.getWorld(), x, y, z);
-			if (ServerOneWorldGuard.canBreak(loc2, player)) {
+			if (!ServerOnePlugin.worldGuardIsEnabled() || ServerOneWorldGuard.canBreak(loc2, player)) {
 			    if (loc2.getBlock().getType() == mat)
 				loc2.getBlock().breakNaturally();
 			    count++;
