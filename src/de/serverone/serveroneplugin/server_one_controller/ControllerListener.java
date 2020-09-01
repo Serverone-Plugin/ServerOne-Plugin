@@ -19,7 +19,7 @@ import de.serverone.serveroneplugin.serverShop.Inventory_Villager;
 import de.serverone.serveroneplugin.universalGetter.BookGetter;
 import de.serverone.source.util.ServerOneWorldGuard;
 
-public class SOCListener implements Listener {
+public class ControllerListener implements Listener {
     final static HashMap<Player, ServerOneController> controllers = new HashMap<>();
 
     @EventHandler

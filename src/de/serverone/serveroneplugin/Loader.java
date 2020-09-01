@@ -30,7 +30,7 @@ import de.serverone.serveroneplugin.playerShop.SimplePlayerShop;
 import de.serverone.serveroneplugin.serverShop.ShopInvController;
 import de.serverone.serveroneplugin.serverShop.ShopVillagerController;
 import de.serverone.serveroneplugin.serverShop.UtilVillagerController;
-import de.serverone.serveroneplugin.server_one_controller.SOCListener;
+import de.serverone.serveroneplugin.server_one_controller.ControllerListener;
 import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.serveroneplugin.structures.EffectCrystallListener;
 import de.serverone.serveroneplugin.structures.Elevator;
@@ -56,7 +56,7 @@ public class Loader {
 	pluginManager.registerEvents(new Elevator(), plugin);
 
 	// CustomMenus
-	pluginManager.registerEvents(new SOCListener(), plugin);
+	pluginManager.registerEvents(new ControllerListener(), plugin);
 	pluginManager.registerEvents(new ShopInvController(), plugin);
 	pluginManager.registerEvents(new ShopVillagerController(), plugin);
 	pluginManager.registerEvents(new ShopRegisterListener(), plugin);
@@ -84,7 +84,7 @@ public class Loader {
 	pluginManager.registerEvents(new Warp.WarpCancelListener(), plugin);
 
 	for (Player player : Bukkit.getOnlinePlayers()) {
-	    SOCListener.createController(player);
+	    ControllerListener.createController(player);
 	}
     }
 

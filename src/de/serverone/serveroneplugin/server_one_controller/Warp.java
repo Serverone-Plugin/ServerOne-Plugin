@@ -26,6 +26,12 @@ public enum Warp implements Listener {
     }
 
     public void warp(Player player) {
+	if (getLocation(player) == null) {
+	    player.sendMessage("§cDieser Warppunkt scheint nicht gesetzt zu sein");
+	    player.closeInventory();
+	    cancel(player);
+	    return;
+	}
 	player.sendMessage("§aDu wirst in 5 Sekunden teleportiert");
 	player.closeInventory();
 	allowed.put(player, Bukkit.getScheduler().scheduleSyncDelayedTask(ServerOnePlugin.getPlugin(), new Runnable() {
@@ -34,10 +40,8 @@ public enum Warp implements Listener {
 		if (allowed.containsKey(player)) {
 		    allowed.remove(player);
 		    Location loc = getLocation(player);
-		    if (loc != null) {
-			player.teleport(loc);
-			player.sendMessage("§aDu wurdest teleportiert");
-		    }
+		    player.teleport(loc);
+		    player.sendMessage("§aDu wurdest teleportiert");
 		}
 	    }
 	}, waitTime));
@@ -89,9 +93,6 @@ public enum Warp implements Listener {
 			config.getDouble("MainWarps." + name + ".Z"), config.getInt("MainWarps." + name + ".Yaw"),
 			config.getInt("MainWarps." + name + ".Pitch"));
 	    } catch (Exception e) {
-		player.sendMessage(
-			"§l§cUps, sieht so aus, als ob dieser Warppoint nicht gesetzt wäre, bitte benachrichte einen Supporter");
-		cancel(player);
 	    }
 	    break;
 	case Point_1:
@@ -107,8 +108,6 @@ public enum Warp implements Listener {
 			config.getPlayerInt(player, "Warps." + name + ".Yaw"),
 			config.getPlayerInt(player, "Warps." + name + ".Pitch"));
 	    } catch (Exception e) {
-		player.sendMessage("§l§cUps, sieht so aus, als ob du diesen Warppoint nicht gesetzt hast.");
-		cancel(player);
 	    }
 	    break;
 
@@ -116,8 +115,6 @@ public enum Warp implements Listener {
 	    try {
 		destination = player.getBedSpawnLocation();
 	    } catch (Exception e) {
-		player.sendMessage("§cDu hast keinen Bettspawnpunkt");
-		cancel(player);
 	    }
 	    break;
 	}
