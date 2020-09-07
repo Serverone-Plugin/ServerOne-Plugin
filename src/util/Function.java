@@ -39,7 +39,7 @@ public class Function {
 	@SuppressWarnings("unchecked")
 	public static String getMessage(String configPath, String path) {
 		ServerOneConfig config = new ServerOneConfig(configPath);
-		List<String> sprüche = (List<String>) config.getList(path);
-		return sprüche.get((int) Math.round(Math.random()*(sprüche.size()-1)));
+		List<String> sprÃ¼che = (List<String>) config.getList(path);
+		return sprÃ¼che.get((int) Math.round(Math.random()*(sprÃ¼che.size()-1)));
 	}
 }

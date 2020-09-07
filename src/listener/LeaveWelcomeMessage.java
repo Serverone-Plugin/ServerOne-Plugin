@@ -2,6 +2,7 @@ package listener;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +17,13 @@ public class LeaveWelcomeMessage implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
     	Player spieler = event.getPlayer();
 		event.setQuitMessage(PlayerMoves(spieler, "messages.leave"));
+		PlayerList(spieler);
     }
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
     	Player player = event.getPlayer();
 		event.setJoinMessage(PlayerMoves(player, "messages.join"));
+		PlayerList(player);
     }
     @SuppressWarnings("unchecked")
 	private String PlayerMoves(Player player, String list) {
@@ -33,4 +36,9 @@ public class LeaveWelcomeMessage implements Listener {
     		return (ChatColor.BLUE + "<ServerOne> " + ChatColor.WHITE + strings[0] + ChatColor.GREEN + player.getName());	
     	return (ChatColor.BLUE + "<ServerOne> " + ChatColor.WHITE + strings[0] + ChatColor.GREEN + player.getName() + ChatColor.WHITE + strings[1]);
     }
+    private void PlayerList(Player spieler) {
+    	spieler.setPlayerListHeader("§9Herzlich Willkommen auf §2§lServerone §r§9, " + spieler.getName() + "!§r\n§9Schau doch mal bei unserem Discord-Server vorbei: §5discord.gg/CTvRRZx§l!\n");
+    	spieler.setPlayerListFooter("\n§6Viel Spaß beim Bauen!");
+    }
+    
 }
