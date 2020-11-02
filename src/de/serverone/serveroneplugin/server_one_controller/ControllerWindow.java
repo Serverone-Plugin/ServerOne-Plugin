@@ -1,9 +1,14 @@
 package de.serverone.serveroneplugin.server_one_controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.source.builder.DefaultMenuBuilder;
@@ -13,15 +18,16 @@ import de.serverone.source.util.ServerOneConfig;
 import de.serverone.source.util.ServerOneWorldGuard;
 
 public enum ControllerWindow {
-    MAIN("§6§lServerOneController", null, true), SKILLS("§6§lSkills", MAIN, true), SKILL_SUB("§6§lSkill ", SKILLS, false),
-    WARPS("§6§lWarps", MAIN, true), TPA("§6§lSpieler-Teleportationen", WARPS, false), SETWARP("§6§lsetWarps", WARPS, false),
+    MAIN("§6§lServerOneController", null, true), SKILLS("§6§lSkills", MAIN, true),
+    SKILL_SUB("§6§lSkill ", SKILLS, false), WARPS("§6§lWarps", MAIN, true),
+    TPA("§6§lSpieler-Teleportationen", WARPS, false), SETWARP("§6§lsetWarps", WARPS, false),
     PREMIUM("§6§lPremium", MAIN, true), GS_SETTINGS("§6§lGrundstückseinstellungen", MAIN, false),
     GS_MEMBERS("§6§lGrundstücksmitglieder", GS_SETTINGS, false);
 
     final String invName;
     final ControllerWindow previrous;
     final boolean isStartPoint;
-    
+
     private ControllerWindow(String invName, ControllerWindow previrous, boolean startpoint) {
 	this.invName = invName;
 	this.previrous = previrous;
@@ -32,12 +38,16 @@ public enum ControllerWindow {
 	player.openInventory(getControllerInventory(player, controller));
     }
 
+    @SuppressWarnings("unchecked")
     private Inventory getControllerInventory(Player player, ServerOneController controller) {
 	Inventory inv = new DefaultMenuBuilder("§cfehler").build();
 	ServerOneConfig playerData = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
 	int warpLimit = playerData.getPlayerInt(player, "stats.warplimit");
 
 	switch (this) {
+	/*
+	 * 
+	 */
 	case MAIN:
 	    inv = new DefaultMenuBuilder(this.invName).setBorderAround().setBarMiddle(new SkullBuilder(player)
 		    .setName("§b§l" + player.getName() + "§3s ServerOneController").setLore("§8MenuItem").build())
@@ -64,6 +74,9 @@ public enum ControllerWindow {
 
 	    inv.setItem(40, new ItemBuilder(Material.BARRIER).setName("§4coming soon").setMenuItem().build());
 	    break;
+	/*
+	 * 
+	 */
 	case PREMIUM:
 	    inv = new DefaultMenuBuilder(this.invName)
 		    .setBarSide(new ItemBuilder(Material.NETHER_STAR).setName("§6§lPremium").setMenuItem().build())
@@ -75,6 +88,9 @@ public enum ControllerWindow {
 	    inv.setItem(23, new ItemBuilder(Material.GOLD_NUGGET).setName("§6§lBank").setLore("§czur Bank")
 		    .setMenuItem().build());
 	    break;
+	/*
+	 * 
+	 */
 	case WARPS:
 	    inv = new DefaultMenuBuilder(ControllerWindow.WARPS.invName)
 		    .setBarSide(new ItemBuilder(Material.CARTOGRAPHY_TABLE).setName("§cWarps").setMenuItem().build())
@@ -82,7 +98,7 @@ public enum ControllerWindow {
 
 	    inv.setItem(19, new ItemBuilder(Material.EMERALD_BLOCK).setName("§6§lSpawn").setMenuItem().build());
 	    inv.setItem(21, new ItemBuilder(Material.GRASS_BLOCK).setName("§2§lFreeBuild").setMenuItem().build());
-	    inv.setItem(23, new ItemBuilder(Material.BARRIER).setName("§4coming soon").setMenuItem().build());
+	    inv.setItem(23, new ItemBuilder(Material.PLAYER_HEAD).setName("§4§lTPAs").setMenuItem().build());
 	    inv.setItem(25, new ItemBuilder(Material.RED_BED).setName("§4§lHome").setMenuItem().build());
 
 	    if (warpLimit >= 0) {
@@ -140,6 +156,9 @@ public enum ControllerWindow {
 	    inv.setItem(36,
 		    new ItemBuilder(Material.WRITABLE_BOOK).setName("§b§lset Warppoints").setMenuItem().build());
 	    break;
+	/*
+	 * 
+	 */
 	case SETWARP:
 	    inv = Bukkit.createInventory(null, 3 * 9, this.invName);
 	    for (int i = 0; i <= 8; i++)
@@ -181,12 +200,21 @@ public enum ControllerWindow {
 		inv.setItem(16, new ItemBuilder(Material.BARRIER, 1).setName("§4§l Warppoint 4 nicht freigeschaltet")
 			.setMenuItem().build());
 	    break;
+	/*
+	 * 
+	 */
 	case GS_SETTINGS:
 	    inv = WorldGuardController.getWGInv(player);
 	    break;
+	/*
+	 * 
+	 */
 	case GS_MEMBERS:
 	    inv = WorldGuardController.getGsMemberInv(player, controller);
 	    break;
+	/*
+	 * 
+	 */
 	case SKILLS:
 	    inv = new DefaultMenuBuilder(this.invName)
 		    .setBarSide(new ItemBuilder(Material.ENCHANTING_TABLE).setName("§cSkills").setMenuItem().build())
@@ -199,22 +227,78 @@ public enum ControllerWindow {
 	    for (int i = 37; i <= 43; i = i + 2)
 		inv.setItem(i, new ItemBuilder(Material.BARRIER).setName("§4coming soon").setMenuItem().build());
 	    break;
+	/*
+	 * 
+	 */
 	case SKILL_SUB:
 	    break;
+	/*
+	 * TODO
+	 */
 	case TPA:
-	    // TODO
-	    inv = new DefaultMenuBuilder(this.invName).build();
-	    int[] slots = {};
-	    int tpaPosition = 0;
+	    HashMap<String, Object> map = controller.getMeta("tpas");
+	    if (map == null) {
+		controller.addMeta("tpas");
+		map = controller.getMeta("tpas");
+	    }
+	    if (!map.containsKey("acceptpos")) {
+		map.put("acceptpos", 0);
+	    }
+	    if (!map.containsKey("playerpos")) {
+		map.put("playerpos", 0);
+	    }
+	    for(String now : new String[] {"tosends", "atsends", "toreceives", "atreceives"}) {
+		if(map.containsKey(now))
+		    map.put(now, new ArrayList<Player>());
+	    }
+	    
+	    Integer pos = (int) map.get("playerpos");
+	    List<Player> toSends = (List<Player>) map.get("tosends");
+	    List<Player> atSends = (List<Player>) map.get("atsends");
+	    
+	    List<Player> toReceives = (List<Player>) map.get("toreceives");
+	    List<Player> atReceives = (List<Player>) map.get("atreceives");
+	    
+	    
+	    inv = new DefaultMenuBuilder(ControllerWindow.TPA.invName).setBarSide(
+		    new ItemBuilder(Material.PLAYER_HEAD).setName("§b§lTeleport-Anfragen").setMenuItem().build())
+		    .build();
 
-	    for (Player now : Bukkit.getOnlinePlayers()) {
-		if (player != now) {
-		    inv.setItem(slots[tpaPosition], new SkullBuilder(now).build());
+	    inv.setItem(18, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler")
+		    .setMenuItem().build());
+	    inv.setItem(36, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder")
+		    .setMenuItem().build());
+	    inv.setItem(26, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bverfügbare Spieler")
+		    .setMenuItem().build());
+	    inv.setItem(44, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("§bGrundstücksmitglieder")
+		    .setMenuItem().build());
 
-		    tpaPosition++;
-		}
+	    List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
+
+	    onlinePlayers.remove(player);
+
+	    map.put("validPlayers", onlinePlayers);
+	    for (int i = 0; i < 21; i++) {
+		ItemStack item;
+		if (i < onlinePlayers.size() + pos) {
+		    Player p = onlinePlayers.get(i + pos);
+		    SkullBuilder builder = new SkullBuilder(p)
+			    .setName("§b" + p.getName());
+		    if(atSends.contains(player)) builder.addLore("§aDu hast bereits eine Anfrage gesendet");
+		    else if(atReceives.contains(player)) builder.addLore("§a" + atDu hast bereits eine Anfrage gesendet");
+		    if(toSends.contains(player)) builder.addLore("§a");
+		    
+		    
+		    item = builder.setMenuItem().build();
+		} else
+		    item = new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setMenuItem().build();
+
+		inv.setItem((i + 19) + (i / 7 * 2), item);
 	    }
 	    break;
+	/*
+	 * 
+	 */
 	default:
 	    return null;
 	}

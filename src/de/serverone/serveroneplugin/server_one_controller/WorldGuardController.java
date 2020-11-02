@@ -83,9 +83,9 @@ public class WorldGuardController {
 	    controller.open(ControllerWindow.GS_MEMBERS);
 	    break;
 	}
-
     }
 
+    @SuppressWarnings("unchecked")
     public static void gsMemberListener(Player player, String displayname, int slot, ItemStack item,
 	    ServerOneController controller) {
 	ProtectedRegion region = ServerOneWorldGuard.getOwnersRegion(player);
@@ -94,6 +94,7 @@ public class WorldGuardController {
 	    player.closeInventory();
 	    return;
 	}
+
 	int playerpos = (int) controller.getMeta("gssettings").get("playerpos");
 	int memberpos = (int) controller.getMeta("gssettings").get("memberpos");
 	if (slot >= 19 && slot <= 25 && displayname != "") {
@@ -113,6 +114,7 @@ public class WorldGuardController {
 	    player.sendMessage("§aDu hast §e" + member.getName() + " §adeinem GS hinzugefügt!");
 	    return;
 	}
+
 	if (slot >= 37 && slot <= 43 && displayname != "") {
 	    DefaultDomain members = region.getMembers();
 	    UUID member = ((List<UUID>) controller.getMeta("gssettings").get("members")).get(slot - 37 + memberpos);

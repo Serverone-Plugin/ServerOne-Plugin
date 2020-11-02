@@ -136,6 +136,9 @@ public class ControllerListener implements Listener {
 	    case "§5§lWarppoint 4":
 		Warp.Point_4.warp(player);
 		break;
+	    case "§4§lTPAs":
+		controller.open(ControllerWindow.TPA);
+		break;
 	    case "§b§lset Warppoints":
 		controller.open(ControllerWindow.SETWARP);
 		break;
@@ -194,6 +197,16 @@ public class ControllerListener implements Listener {
 		WorldGuardController.gsMemberListener(player, displayname, slot, event.getCurrentItem(), controller);
 	    }
 	}
+	if(viewName.equals(ControllerWindow.TPA.invName)) {
+	    validInv = true;
+	    /*
+	     * TODO
+	     */
+	}
+	
+	
+	
+	
 	if(validInv) {
 	    switch(displayname) {
 	    case "§6§lzurück":
