@@ -6,8 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import de.serverone.serveroneplugin.ServerOnePlugin;
 import de.serverone.serveroneplugin.server_one_controller.Warp;
 import de.serverone.source.builder.ItemBuilder;
+import de.serverone.source.util.ServerOneConfig;
 
 public class newPlayerListener implements Listener {
     @EventHandler
@@ -23,5 +25,7 @@ public class newPlayerListener implements Listener {
 	player.getInventory().addItem(new ItemBuilder(Material.STONE_PICKAXE).build());
 	player.getInventory().addItem(new ItemBuilder(Material.STONE_AXE).build());
 	player.getInventory().addItem(new ItemBuilder(Material.STONE_SHOVEL).build());
+	
+	ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml").set(player.getUniqueId() + ".stats.warplimit", 1);
     }
 }

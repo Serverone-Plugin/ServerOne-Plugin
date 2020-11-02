@@ -125,7 +125,7 @@ public class sopCommand implements CommandExecutor, TabCompleter {
 
 	    /* setWarpLimit-Command */
 	    case "setwarplimit":
-		if (args.length < 3) {
+		if (args.length < 4) {
 		    sendInfo(player);
 		    return true;
 		}
@@ -209,7 +209,7 @@ public class sopCommand implements CommandExecutor, TabCompleter {
 
 	int amount = -2;
 	try {
-	    amount = Integer.parseInt(s_amount) - 1;
+	    amount = Integer.parseInt(s_amount);
 	} catch (Exception e) {
 	}
 
