@@ -18,6 +18,7 @@ import de.serverone.serveroneplugin.items.CreditCardController;
 import de.serverone.serveroneplugin.items.ShulkerSword;
 import de.serverone.serveroneplugin.items.VeinMinerAxe;
 import de.serverone.serveroneplugin.items.VeinMinerPiackaxe;
+import de.serverone.serveroneplugin.listener.FlightListener;
 import de.serverone.serveroneplugin.listener.LeaveWelcomeMessage;
 import de.serverone.serveroneplugin.listener.PlayerDeathListener;
 import de.serverone.serveroneplugin.listener.SeatListener;
@@ -78,6 +79,7 @@ public class Loader {
 	pluginManager.registerEvents(new antiSpawnDestroyListener(), plugin);
 	pluginManager.registerEvents(new VoidFallListener(), plugin);
 	pluginManager.registerEvents(new newPlayerListener(), plugin);
+	pluginManager.registerEvents(new FlightListener(), plugin);
 
 	//
 	pluginManager.registerEvents(new SeatListener(), plugin);

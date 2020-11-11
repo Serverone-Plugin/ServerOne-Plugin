@@ -125,10 +125,11 @@ public class sopCommand implements CommandExecutor, TabCompleter {
 
 	    /* setWarpLimit-Command */
 	    case "setwarplimit":
-		if (args.length < 4) {
+		if (args.length < 3) {
 		    sendInfo(player);
 		    return true;
 		}
+		
 		setWarpLimit(player, Bukkit.getPlayer(args[1]), args[2]);
 		break;
 
@@ -207,20 +208,21 @@ public class sopCommand implements CommandExecutor, TabCompleter {
 	// Loading playerdata.yml
 	ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
 
-	int amount = -2;
+	int amount = -1;
 	try {
 	    amount = Integer.parseInt(s_amount);
 	} catch (Exception e) {
+	    player.sendMessage("Du musste eine Nummer angeben");
+	    return;
 	}
 
-	if (amount >= -1 && amount <= 3) {
+	if (amount >= 0 && amount <= 4) {
 	    config.set(target.getUniqueId() + ".stats.warplimit", amount);
 	    player.sendMessage("§2Warplimit erfolgreich verändert");
 
 	    config.save();
 	} else
 	    player.sendMessage("§cUngültige Angabe " + s_amount);
-
 	return;
     }
 

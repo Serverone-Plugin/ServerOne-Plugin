@@ -42,6 +42,7 @@ public enum Warp implements Listener {
 		    Location loc = getLocation(player);
 		    player.teleport(loc);
 		    player.sendMessage("§aDu wurdest teleportiert");
+		    allowed.remove(player);
 		}
 	    }
 	}, waitTime));
@@ -58,25 +59,29 @@ public enum Warp implements Listener {
 	    config.set("MainWarps." + name + ".Z", (double) Math.round(player.getLocation().getZ() * 10) / 10);
 	    config.set("MainWarps." + name + ".Yaw", Math.round(player.getLocation().getYaw()));
 	    config.set("MainWarps." + name + ".Pitch", Math.round(player.getLocation().getPitch()));
-	    break;
+	    config.save();
+	    player.sendMessage("§aDu hast §e" + name + " §agesetzt");
+	    return;
 	case Home:
 	    return;
 	default:
 	    break;
 	}
 
-	ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
-	config.set(player.getUniqueId() + ".Warps." + name + ".World", player.getWorld().getName());
-	config.set(player.getUniqueId() + ".Warps." + name + ".X",
-		(double) Math.round(player.getLocation().getX() * 10) / 10);
-	config.set(player.getUniqueId() + ".Warps." + name + ".Y", Math.round(player.getLocation().getY()));
-	config.set(player.getUniqueId() + ".Warps." + name + ".Z",
-		(double) Math.round(player.getLocation().getZ() * 10) / 10);
-	config.set(player.getUniqueId() + ".Warps." + name + ".Yaw", Math.round(player.getLocation().getYaw()));
-	config.set(player.getUniqueId() + ".Warps." + name + ".Pitch", Math.round(player.getLocation().getPitch()));
-	player.sendMessage("§aDu hast §e" + name + " §agesetzt");
+	{
+	    ServerOneConfig config = ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "playerdata.yml");
+	    config.set(player.getUniqueId() + ".Warps." + name + ".World", player.getWorld().getName());
+	    config.set(player.getUniqueId() + ".Warps." + name + ".X",
+		    (double) Math.round(player.getLocation().getX() * 10) / 10);
+	    config.set(player.getUniqueId() + ".Warps." + name + ".Y", Math.round(player.getLocation().getY()));
+	    config.set(player.getUniqueId() + ".Warps." + name + ".Z",
+		    (double) Math.round(player.getLocation().getZ() * 10) / 10);
+	    config.set(player.getUniqueId() + ".Warps." + name + ".Yaw", Math.round(player.getLocation().getYaw()));
+	    config.set(player.getUniqueId() + ".Warps." + name + ".Pitch", Math.round(player.getLocation().getPitch()));
+	    player.sendMessage("§aDu hast §e" + name + " §agesetzt");
 
-	config.save();
+	    config.save();
+	}
     }
 
     public Location getLocation(Player player) {

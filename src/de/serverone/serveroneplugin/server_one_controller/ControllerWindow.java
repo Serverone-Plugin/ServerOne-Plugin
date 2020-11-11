@@ -93,7 +93,7 @@ public enum ControllerWindow {
 	    inv.setItem(21, new ItemBuilder(Material.GRASS_BLOCK).setName("§2§lFreeBuild").setMenuItem().build());
 	    inv.setItem(25, new ItemBuilder(Material.RED_BED).setName("§4§lHome").setMenuItem().build());
 
-	    if (warpLimit >= 0) {
+	    if (warpLimit >= 1) {
 		String lore = playerData.getConfig().getString(player.getUniqueId() + ".Warps.Warp_1.World") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_1.X") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_1.Y") + " "
@@ -106,7 +106,7 @@ public enum ControllerWindow {
 		inv.setItem(37, new ItemBuilder(Material.BARRIER, 1).setName("§4§lWarppoint 1 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 1) {
+	    if (warpLimit >= 2) {
 		String lore = playerData.getConfig().getString(player.getUniqueId() + ".Warps.Warp_2.World") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_2.X") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_2.Y") + " "
@@ -119,7 +119,7 @@ public enum ControllerWindow {
 		inv.setItem(39, new ItemBuilder(Material.BARRIER, 2).setName("§4§lWarppoint 2 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 2) {
+	    if (warpLimit >= 3) {
 		String lore = playerData.getConfig().getString(player.getUniqueId() + ".Warps.Warp_3.World") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_3.X") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_3.Y") + " "
@@ -132,7 +132,7 @@ public enum ControllerWindow {
 		inv.setItem(41, new ItemBuilder(Material.BARRIER, 3).setName("§4§lWarppoint 3 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 3) {
+	    if (warpLimit >= 4) {
 		String lore = playerData.getConfig().getString(player.getUniqueId() + ".Warps.Warp_4.World") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_4.X") + " "
 			+ playerData.getConfig().getInt(player.getUniqueId() + ".Warps.Warp_4.Y") + " "
@@ -164,28 +164,28 @@ public enum ControllerWindow {
 			.build());
 	    inv.setItem(4, new ItemBuilder(Material.ARROW).setName("§6§lzurück").setMenuItem().build());
 
-	    if (warpLimit >= 0) {
+	    if (warpLimit > 0) {
 		inv.setItem(10,
 			new ItemBuilder(Material.PAPER, 1).setName("§b§lset Warppoint 1").setMenuItem().build());
 	    } else
 		inv.setItem(10, new ItemBuilder(Material.BARRIER, 1).setName("§4§l Warppoint 1 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 1) {
+	    if (warpLimit > 1) {
 		inv.setItem(12,
 			new ItemBuilder(Material.PAPER, 2).setName("§b§lset Warppoint 2").setMenuItem().build());
 	    } else
 		inv.setItem(12, new ItemBuilder(Material.BARRIER, 1).setName("§4§l Warppoint 2 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 2) {
+	    if (warpLimit > 2) {
 		inv.setItem(14,
 			new ItemBuilder(Material.PAPER, 3).setName("§b§lset Warppoint 3").setMenuItem().build());
 	    } else
 		inv.setItem(14, new ItemBuilder(Material.BARRIER, 1).setName("§4§l Warppoint 3 nicht freigeschaltet")
 			.setMenuItem().build());
 
-	    if (warpLimit >= 3) {
+	    if (warpLimit > 3) {
 		inv.setItem(16,
 			new ItemBuilder(Material.PAPER, 4).setName("§b§lset Warppoint 4").setMenuItem().build());
 	    } else
