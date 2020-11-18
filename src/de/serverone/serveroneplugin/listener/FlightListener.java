@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import de.serverone.serveroneplugin.ServerOnePlugin;
@@ -36,18 +35,6 @@ public class FlightListener implements Listener {
 	    else {
 		player.setFlying(false);
 		player.setAllowFlight(false);
-	    }
-	}
-    }
-
-    @EventHandler
-    public void onChangeGamemode(PlayerGameModeChangeEvent event) {
-	if (event.getNewGameMode().equals(GameMode.SURVIVAL) || event.getNewGameMode().equals(GameMode.ADVENTURE)) {
-	    Player player = event.getPlayer();
-	    if (player.getWorld().getName().equals(
-		    ServerOneConfig.getConfig(ServerOnePlugin.getPlugin(), "config.yml").getString("Worlds.build"))) {
-		player.setFlying(true);
-		player.setAllowFlight(true);
 	    }
 	}
     }
